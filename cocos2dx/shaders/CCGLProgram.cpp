@@ -117,6 +117,8 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
         }
+    } else {
+        CCLOG("cocos2d: empty vShaderByteArray");
     }
 
     // Create and compile fragment shader
@@ -126,6 +128,8 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
         }
+    } else {
+        CCLOG("cocos2d: empty fShaderByteArray");
     }
 
     if (_vertShader)
@@ -172,7 +176,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     
     const GLchar *sources[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-        (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
+        (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision highp float;\n"),
 #endif
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
@@ -272,8 +276,18 @@ bool GLProgram::link()
     if (status == GL_FALSE)
     {
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
+
+        GLint maxLength = 0;
+        glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &maxLength);
+        std::vector<GLchar> infoLog(maxLength);
+        glGetProgramInfoLog(_program, maxLength, &maxLength, &infoLog[0]);
+
+        CCLOG("cocos2d: ERROR: log: %s", &infoLog[0]);
+
         GL::deleteProgram(_program);
         _program = 0;
+    } else {
+        CCLOG("cocos2d: INFO: program %i linked", _program);
     }
 #endif
 	

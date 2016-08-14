@@ -269,12 +269,22 @@ bool Image::initWithImageFile(const char * strPath)
     bool bRet = false;
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
 
+    if (access(fullPath.c_str(), F_OK ) == -1) {
+        printf("WARN: Image file '%s' doesn`t exists\n", fullPath.c_str());
+        return false;
+    }
+
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
     // operations underneath. Consequently, loading images via IMG_Load (an SDL
     // API) will be a lot faster than running libpng et al as compiled with
     // Emscripten.
     SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
+
+    if (!iSurf) {
+        printf("ERROR: Unabel to load image '%s' (unable to IMG_Load)\n", fullPath.c_str());
+        return false;
+    }
 
     int size = 4 * (iSurf->w * iSurf->h);
     bRet = initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);

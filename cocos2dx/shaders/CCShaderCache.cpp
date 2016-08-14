@@ -226,6 +226,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 {
     switch (type) {
         case kShaderType_PositionTextureColor:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionTextureColor");
             p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -234,6 +235,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
             
             break;
         case kShaderType_PositionTextureColorAlphaTest:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionTextureColorAlphaTest");
             p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -242,6 +244,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
             break;
         case kShaderType_PositionColor:  
+            CCLOG("cocos2d: INFO: load kShaderType_PositionColor");
             p->initWithVertexShaderByteArray(ccPositionColor_vert ,ccPositionColor_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -249,6 +252,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
             break;
         case kShaderType_PositionTexture:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionTexture");
             p->initWithVertexShaderByteArray(ccPositionTexture_vert ,ccPositionTexture_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -256,6 +260,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
             break;
         case kShaderType_PositionTexture_uColor:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionTexture_uColor");
             p->initWithVertexShaderByteArray(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -263,6 +268,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
             break;
         case kShaderType_PositionTextureA8Color:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionTextureA8Color");        
             p->initWithVertexShaderByteArray(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
@@ -271,12 +277,14 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
 
             break;
         case kShaderType_Position_uColor:
+            CCLOG("cocos2d: INFO: load kShaderType_Position_uColor");
             p->initWithVertexShaderByteArray(ccPosition_uColor_vert, ccPosition_uColor_frag);    
             
             p->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);    
             
             break;
         case kShaderType_PositionLengthTexureColor:
+            CCLOG("cocos2d: INFO: load kShaderType_PositionLengthTexureColor");
             p->initWithVertexShaderByteArray(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
             
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);

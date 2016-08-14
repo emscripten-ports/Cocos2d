@@ -33,6 +33,7 @@ SHAREDLIBS += -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 INCLUDES += -I$(COCOS_ROOT)/CocosDenshion/include
 
+
 $(TARGET).js: $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS)
@@ -52,7 +53,7 @@ $(TARGET).data:
 	(cd $(SD_RESOURCE_PATH) && tar cf - $(SD_RESOURCES)) | (cd $(RESTMP) && tar xvf -)
 	# NOTE: we copy the system arial.ttf so that there is always a fallback.
 	cp $(ARIEL_TTF) $(RESTMP)/fonts/arial.ttf
-	(cd $(RESTMP); python $(PACKAGER) $(EXECUTABLE).data $(patsubst %,--preload %,$(ALL_ASSETS)) --preload fonts --pre-run > $(EXECUTABLE).data.js)
+	(cd $(RESTMP); python $(PACKAGER) $(EXECUTABLE).data $(patsubst %,--preload %,$(ALL_ASSETS)) --preload fonts --js-output=$(EXECUTABLE).data.js)
 	mv $(RESTMP)/$(EXECUTABLE).data $@
 	mv $(RESTMP)/$(EXECUTABLE).data.js $@.js
 	rm -rf $(RESTMP)

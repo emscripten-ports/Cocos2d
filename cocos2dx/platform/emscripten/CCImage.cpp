@@ -36,13 +36,14 @@
 #include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-#include <net/arpa/inet.h>
+#include <arpa/inet.h>
 
 #define szFont_kenning 2
 
 #define RSHIFT6(num) ((num)>>6)
 
 using namespace std;
+typedef unsigned int uint;
 
 struct TextLine {
 	std::string sLineStr;

@@ -3,7 +3,7 @@
 # Hacky script to re-compile all of Cocos2D-X's dependencies with Emscripten.
 # TODO: paramaterize directories, download source code and run without user intervention.
 
-EMSCRIPTEN=~/emscripten
+EMSCRIPTEN=~/emscripten/sdk/emscripten
 TMP=`mktemp -d /tmp/cc-deps.XXXXXXX`
 
 # Libtiff, from ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.3.tar.gz

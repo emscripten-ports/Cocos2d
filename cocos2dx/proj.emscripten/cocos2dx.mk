@@ -1,6 +1,6 @@
 all:
 
-DEFINES += -DEMSCRIPTEN -DCC_KEYBOARD_SUPPORT
+DEFINES += -DEMSCRIPTEN -DCC_KEYBOARD_SUPPORT -DGL_ES=1
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ifndef COCOS_ROOT
@@ -25,8 +25,8 @@ ARFLAGS = cr
 EXPORTED_FLAGS := -s EXPORTED_FUNCTIONS="['_CCTextureCacheEmscripten_addImageAsyncCallBack','_CCTextureCacheEmscripten_preMultiplyImageRegion','_malloc','_free','_main']"
 JSLIBS := --js-library $(COCOS_SRC)/platform/emscripten/CCTextureCacheEmscripten.js
 
-CCFLAGS  += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS)
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS) -std=c++11
+CCFLAGS  += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s TOTAL_MEMORY=568435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS)
+CXXFLAGS += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s TOTAL_MEMORY=568435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS) -std=c++11
 
 LIB_DIR = $(COCOS_ROOT)/lib/emscripten
 BIN_DIR = bin
@@ -37,8 +37,6 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/include \
     -I$(COCOS_SRC)/kazmath/include \
     -I$(COCOS_SRC)/platform/emscripten \
-    -I$(COCOS_SRC)/platform/third_party/emscripten/libpng \
-    -I$(COCOS_SRC)/platform/third_party/emscripten/libz \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libtiff/include \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/emscripten/libwebp
@@ -47,18 +45,15 @@ LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
 
 ifeq ($(DEBUG), 1)
-CCFLAGS  += -O0 -s ASSERTIONS=1 --jcache -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=1
-CXXFLAGS += -O0 -s ASSERTIONS=1 --jcache -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=1
+CCFLAGS  += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0 -s DISABLE_EXCEPTION_CATCHING=0
+CXXFLAGS += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0 -s DISABLE_EXCEPTION_CATCHING=0
 DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1 -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
 BIN_DIR := $(BIN_DIR)/debug
 else
-# Async image loading code incompatible with asm.js for now. Disable until
-# we've had time to investigate. --closure 0 so that symbols don't get mangled,
-# rendering them inaccessible from JS code.
-CCFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
-CXXFLAGS += -O2 --jcache -s GL_UNSAFE_OPTS=0 -s ASM_JS=1
+CCFLAGS  += -O2 -s STB_IMAGE=1 -s INVOKE_RUN=0
+CXXFLAGS += -O2 -s STB_IMAGE=1 -s INVOKE_RUN=0
 DEFINES += -DNDEBUG -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/release
 LIB_DIR := $(LIB_DIR)/release
@@ -83,11 +78,11 @@ CORE_MAKEFILE_LIST := $(MAKEFILE_LIST)
 
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/emscripten/libraries
 STATICLIBS = \
-    $(STATICLIBS_DIR)/libpng.a \
-    $(STATICLIBS_DIR)/libz.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libwebp.a
+
+STATICLIBS =
 
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
 LIBS = -lrt -lz
