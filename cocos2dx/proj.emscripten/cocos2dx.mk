@@ -25,8 +25,8 @@ ARFLAGS = cr
 EXPORTED_FLAGS := -s EXPORTED_FUNCTIONS="['_CCTextureCacheEmscripten_addImageAsyncCallBack','_CCTextureCacheEmscripten_preMultiplyImageRegion','_malloc','_free','_main']"
 JSLIBS := --js-library $(COCOS_SRC)/platform/emscripten/CCTextureCacheEmscripten.js
 
-CCFLAGS  += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s TOTAL_MEMORY=568435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS)
-CXXFLAGS += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s TOTAL_MEMORY=568435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS) -std=c++11
+CCFLAGS  += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS)
+CXXFLAGS += -MMD -Wall -fPIC -Wno-overloaded-virtual -s USE_ZLIB=1 -s USE_LIBPNG=1 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS) -std=c++11
 
 LIB_DIR = $(COCOS_ROOT)/lib/emscripten
 BIN_DIR = bin
@@ -45,8 +45,8 @@ LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
 
 ifeq ($(DEBUG), 1)
-CCFLAGS  += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0 -s DISABLE_EXCEPTION_CATCHING=0
-CXXFLAGS += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0 -s DISABLE_EXCEPTION_CATCHING=0
+CCFLAGS  += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0
+CXXFLAGS += -O1 -s STB_IMAGE=1 -s GL_ASSERTIONS=1 -s ASSERTIONS=2 -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=0 -s DEMANGLE_SUPPORT=1 -s UNALIGNED_MEMORY=0 -s ASM_JS=1 -s SAFE_HEAP_LOG=0
 DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1 -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
