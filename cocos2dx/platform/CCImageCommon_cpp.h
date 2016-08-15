@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <ctype.h>
+#include <unistd.h>
 
 #ifdef EMSCRIPTEN
 #include <SDL/SDL.h>
