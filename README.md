@@ -2,7 +2,7 @@
 
 Base version is: **cocos2d-x-3.0alpha0-pre**
 
-## Mabnually building
+## Manually building
 
 You can build cocos2d with emscripten bu running this commands:
 
