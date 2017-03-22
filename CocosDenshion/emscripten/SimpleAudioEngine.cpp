@@ -231,9 +231,11 @@ namespace CocosDenshion
         {
             sound = s_effects[key];
         }
+        // TODO: @caiiiycuk make it works on linux
+
         // This is safe here since Emscripten is just passing back an
         // incrementing integer each time you use the Mix_LoadWAV method.
-        unsigned int result = (unsigned int) sound->chunk;
+        unsigned int result = (size_t) sound->chunk;
 
         // XXX: This is a bit of a hack, but... Choose a channel based on the
         // modulo of the # of channels. This allows us to set the volume

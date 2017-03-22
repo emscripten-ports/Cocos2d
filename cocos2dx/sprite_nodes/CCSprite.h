@@ -472,6 +472,7 @@ public:
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
+    virtual void setScale(float scaleX, float scaleY);
     virtual void setVertexZ(float vertexZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;

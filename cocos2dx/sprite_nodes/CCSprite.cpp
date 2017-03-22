@@ -826,6 +826,12 @@ void Sprite::setScale(float fScale)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setScale(float scaleX, float scaleY )
+{
+        setScaleX( scaleX );
+        setScaleY( scaleY );
+}
+
 void Sprite::setVertexZ(float fVertexZ)
 {
     Node::setVertexZ(fVertexZ);

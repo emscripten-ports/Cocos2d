@@ -1196,6 +1196,20 @@ void LabelBMFont::setScaleY(float scaleY)
     updateLabel();
 }
 
+void LabelBMFont::setScaleXY(float scaleX, float scaleY)
+{
+        SpriteBatchNode::setScaleX(scaleX);
+        SpriteBatchNode::setScaleY(scaleY);
+        updateLabel( );
+}
+
+void LabelBMFont::modifyScaleXY(float deltaScaleX, float deltaScaleY )
+{
+        SpriteBatchNode::setScaleX( getScaleX( ) * deltaScaleX );
+        SpriteBatchNode::setScaleY( getScaleY( ) * deltaScaleY );
+        updateLabel( );
+}
+
 float LabelBMFont::getLetterPosXLeft( Sprite* sp )
 {
     return sp->getPosition().x * _scaleX - (sp->getContentSize().width * _scaleX * sp->getAnchorPoint().x);

@@ -235,6 +235,12 @@ Size Size::operator*(float a) const
     return Size(this->width * a, this->height * a);
 }
 
+Size Size::operator*(Size a) const
+{
+    return Size( this->width * a.width, this->height * a.height );
+}
+
+
 Size Size::operator/(float a) const
 {
 	CCASSERT(a!=0, "CCSize division by 0.");

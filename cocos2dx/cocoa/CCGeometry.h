@@ -34,6 +34,80 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+const float NEAR_ZERO = 0.0001f;
+
+inline bool floatEquals( float a, float b, float margin )
+{
+        if( fabs( a - b ) < margin )
+        {
+                return true;
+        }
+        return false;
+}
+
+
+inline bool floatEquals( float a, float b )
+{
+        if( fabs( a - b ) < NEAR_ZERO )
+        {
+                return true;
+        }
+        return false;
+}
+
+inline bool isZero( float value, float margin )
+{
+        if( fabs( value ) < margin )
+        {
+                return true;
+        }
+        return false;
+}
+
+inline bool isZero( float value )
+{
+        if( fabs( value ) < NEAR_ZERO )
+        {
+                return true;
+        }
+        return false;
+}
+
+inline int getDirection( int value )
+{
+        if( value < 0 ) return -1;
+        if( value > 0 ) return 1;
+        return 0;
+}
+
+inline int getDirection( float value )
+{
+        if( value < 0 ) return -1;
+        if( value > 0 ) return 1;
+        return 0;
+}
+
+inline int getDirectionOrZero( float value, float margin )
+{
+        if( isZero( value, margin ) )
+                return 0;
+
+        if( value < 0 ) return -1;
+        if( value > 0 ) return 1;
+        return 0;
+}
+
+/** Clamp a value between from and to.
+ @since v0.99.1
+ */
+inline int clampi( int value, int min_inclusive, int max_inclusive)
+{
+    if (min_inclusive > max_inclusive) {
+        CC_SWAP(min_inclusive, max_inclusive, int );
+    }
+    return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
+}
+
 /** Clamp a value between from and to.
  @since v0.99.1
  */
@@ -44,6 +118,7 @@ inline float clampf(float value, float min_inclusive, float max_inclusive)
     }
     return value < min_inclusive ? min_inclusive : value < max_inclusive? value : max_inclusive;
 }
+
 
 /**
  * @addtogroup data_structures
@@ -295,6 +370,7 @@ public:
     Size operator+(const Size& right) const;
     Size operator-(const Size& right) const;
     Size operator*(float a) const;
+    Size operator*(Size a) const;
     Size operator/(float a) const;
     void setSize(float width, float height);
     bool equals(const Size& target) const;

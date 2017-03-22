@@ -224,6 +224,8 @@ public:
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
+    virtual void setScaleXY(float scaleX, float scaleY);
+    virtual void modifyScaleXY(float deltaScaleX, float deltaScaleY );
     
     // RGBAProtocol 
     virtual bool isOpacityModifyRGB() const;

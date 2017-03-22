@@ -214,14 +214,13 @@ var LibraryCocosHelper = {
                     this.ctx.drawImage(args.img, args.i, args.j, rw, rh, args.i, args.j, rw, rh);
 
                     var imgData = this.ctx.getImageData(args.i, args.j, rw, rh);
-                    var inImgData = _malloc(rw * rh * 4);
+                    var inImgData = Module['_malloc'](rw * rh * 4);
                     Module.HEAP8.set(imgData.data, inImgData);
 
                     // Call into C++ code in CCTextureCacheEmscripten.cpp to do the actual
                     // copy and pre-multiply.
-                    _CCTextureCacheEmscripten_preMultiplyImageRegion(inImgData, rw, rh, args.outImgData, args.w, args.h, args.i, args.j);
-
-                    _free(inImgData);
+                    Module['_TextureCacheEmscripten_preMultiplyImageRegion'](inImgData, rw, rh, args.outImgData, args.w, args.h, args.i, args.j);
+                    Module['_free'](inImgData);
                 };
 
                 /**
@@ -254,7 +253,7 @@ var LibraryCocosHelper = {
                         };
                         that.operationQueue.enqueue(setupCanvas, { w: w, h: h });
 
-                        var outImgData = _malloc(w * h * 4);
+                        var outImgData = Module['_malloc'](w * h * 4);
 
                         for(var i = 0; i < w; i += that.regionSize)
                         {
@@ -271,7 +270,7 @@ var LibraryCocosHelper = {
                         }
 
                         var fireCallback = function(args) {
-                            _CCTextureCacheEmscripten_addImageAsyncCallBack(that.cxxTextureCache, args.asyncData, args.imgData, args.w, args.h);
+                            Module['_TextureCacheEmscripten_addImageAsyncCallBack'](that.cxxTextureCache, args.asyncData, args.imgData, args.w, args.h);
                         };
                         var opArgs = {
                             asyncData: asyncData,
@@ -348,8 +347,8 @@ window['cocos2dx'] = LibraryCocosHelper.$cocos2dx;
 extern "C" {
 // This C interface is exposed so that the JavaScript in
 // TextureCacheEmscripten.js is able to call into these functions.
-void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height);
-void TextureCacheEmscripten_preMultiplyImageRegion( unsigned char *in, int win, int hin, unsigned char *out, int wout, int hout, int xout, int yout);
+void EMSCRIPTEN_KEEPALIVE TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height);
+void EMSCRIPTEN_KEEPALIVE TextureCacheEmscripten_preMultiplyImageRegion( unsigned char *in, int win, int hin, unsigned char *out, int wout, int hout, int xout, int yout);
 };
 
 void TextureCacheEmscripten_addImageAsyncCallBack(TextureCacheEmscripten *tc, TextureCache::AsyncStruct *data, unsigned char *imgData, int width, int height)

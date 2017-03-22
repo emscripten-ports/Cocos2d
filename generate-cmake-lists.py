@@ -23,6 +23,8 @@ for source in platform_linux_sources:
 include_lines = ""
 for include in includes:
 	include = include.replace('/platform/emscripten', '/platform/linux')
+	include = include.replace('/platform/third_party/emscripten', '/platform/third_party/linux')
+	include = include.replace('libtiff/include', 'libtiff')
 	include_lines = include_lines + "\n\t PUBLIC " + include
 
 

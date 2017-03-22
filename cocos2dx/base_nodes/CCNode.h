@@ -272,6 +272,8 @@ public:
      * @return The scale factor of the node.
      */
     virtual float getScale() const;
+
+    virtual Size getScaleAsSize() const;
     
     
     /**

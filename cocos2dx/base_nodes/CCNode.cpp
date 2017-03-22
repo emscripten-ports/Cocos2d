@@ -256,6 +256,11 @@ void Node::setScale(float scale)
     _transformDirty = _inverseDirty = true;
 }
 
+Size Node::getScaleAsSize() const
+{
+        return Size( _scaleX, _scaleY );
+}
+
 /// scaleX getter
 float Node::getScaleX() const
 {
