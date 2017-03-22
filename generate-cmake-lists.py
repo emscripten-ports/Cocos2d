@@ -40,12 +40,17 @@ else()
     set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
     set(CMAKE_C_FLAGS "-g -w -O0 -Wall")
     set(CMAKE_CXX_FLAGS "--std=c++11")
-    add_definitions(-DLINUX -DCC_KEYBOARD_SUPPORT -DGL_ES=1)
+    # set(CMAKE_EXE_LINKER_FLAGS "-Wl,--unresolved-symbols=ignore-all")
+    add_definitions(-DLINUX -DCC_KEYBOARD_SUPPORT -DGL_ES=1 -DCOCOS2D_DEBUG=1) # use DCOCOS2D_DEBUG=2 for full logs
 
     set(COCOS2D_SOURCES %s
     )
 
     set(COCOS2D_INLCUDE_DIRECTORIES %s
+    )
+
+    set(COCOS2D_LIBS
+    	X11 GL GLEW pthread jpeg freetype z png SDL2 SDL_mixer tiff webp fontconfig
     )
 endif()
 
