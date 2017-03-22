@@ -24,12 +24,12 @@ THE SOFTWARE.
 
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
-#include "CCDirector.h"
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#include "keypad_dispatcher/CCKeypadDispatcher.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#include "CCDirector.h"
 #include "CCGL.h"
 #include "CCAccelerometer.h"
 #include "CCApplication.h"
@@ -48,6 +48,10 @@ void glutInit(int *argcp, char **argv);
 void glutMouseFunc(void (*func)(int button, int state, int x, int y));
 void glutMotionFunc(void (*func)(int x, int y));
 void glutPassiveMotionFunc(void (*func)(int x, int y));
+void glutSpecialFunc(void (*func)(int key, int x, int y));
+void glutSpecialUpFunc(void (*func)(int key, int x, int y));
+void glutKeyboardFunc(void (*func)(unsigned char key, int x, int y));
+void glutKeyboardUpFunc(void (*func)(unsigned char key, int x, int y));
 }
 
 // Constants for mouse events (inferred from experiment)
@@ -107,6 +111,26 @@ extern "C" void motionCB(int x, int y)
     }
 }
 
+void onPressKeyInt(int key, int x, int y) {
+    if (key == 120 /*BACKSPACE*/) {
+        IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    }
+    Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(key, true);
+}
+
+void onReleaseKeyInt(int key, int x, int y) {
+    Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(key, false);
+}
+
+void onPressKey(unsigned char key, int x, int y) {
+    onPressKeyInt((int) key, x, y);
+}
+
+void onReleaseKey(unsigned char key, int x, int y) {
+    onReleaseKeyInt((int) key, x, y);
+}
+
+
 EGLView::EGLView()
 {
 	_eglDisplay = EGL_NO_DISPLAY;
@@ -139,6 +163,10 @@ EGLView::EGLView()
     glutMouseFunc(&mouseCB);
     glutMotionFunc(&motionCB);
     glutPassiveMotionFunc(&motionCB);
+    glutSpecialFunc(&onPressKeyInt);
+    glutSpecialUpFunc(&onReleaseKeyInt);
+    glutKeyboardFunc(&onPressKey);
+    glutKeyboardUpFunc(&onReleaseKey);
 }
 
 EGLView::~EGLView()
