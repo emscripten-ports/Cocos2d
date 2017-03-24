@@ -101,7 +101,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../sprite_nodes/CCSpriteFrameCache.cpp \
 ../support/ccUTF8.cpp \
 ../support/CCProfiling.cpp \
-../support/user_default/CCUserDefault.cpp \
+../support/user_default/CCUserDefaultEmscripten.cpp \
 ../support/TransformUtils.cpp \
 ../support/base64.cpp \
 ../support/ccUtils.cpp \
