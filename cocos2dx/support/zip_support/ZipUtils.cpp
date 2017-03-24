@@ -314,7 +314,9 @@ bool ZipUtils::ccIsCCZFile(const char *path)
         return false;
     }
 
-    return ccIsCCZBuffer(compressed, fileLen);
+    bool isZBuffer = ccIsCCZBuffer(compressed, fileLen);
+    delete[] compressed;
+    return isZBuffer;
 }
 
 bool ZipUtils::ccIsCCZBuffer(const unsigned char *buffer, int len)
@@ -343,7 +345,10 @@ bool ZipUtils::ccIsGZipFile(const char *path)
         return false;
     }
 
-    return ccIsGZipBuffer(compressed, fileLen);
+    bool isGZBuffer = ccIsGZipBuffer(compressed, fileLen);
+    delete[] compressed;
+
+    return isGZBuffer;
 }
 
 bool ZipUtils::ccIsGZipBuffer(const unsigned char *buffer, int len)
