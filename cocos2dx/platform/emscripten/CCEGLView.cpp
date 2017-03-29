@@ -45,9 +45,6 @@ THE SOFTWARE.
 
 extern "C" {
 void glutInit(int *argcp, char **argv);
-void glutMouseFunc(void (*func)(int button, int state, int x, int y));
-void glutMotionFunc(void (*func)(int x, int y));
-void glutPassiveMotionFunc(void (*func)(int x, int y));
 void glutSpecialFunc(void (*func)(int key, int x, int y));
 void glutSpecialUpFunc(void (*func)(int key, int x, int y));
 void glutKeyboardFunc(void (*func)(unsigned char key, int x, int y));
@@ -73,41 +70,22 @@ enum Orientation
 
 static Orientation orientation = LANDSCAPE;
 
-#define MAX_TOUCHES         4
 static EGLView* s_pInstance = NULL;
 
-static bool buttonDepressed = false;
-extern "C" void mouseCB(int button, int state, int x, int y)
-{
-    float fx = x;
-    float fy = y;
+extern "C" void EMSCRIPTEN_KEEPALIVE ccEglViewMultiTouchEvent(int finger, int fstate, float fx, float fy) {
     EGLView* pEGLView = EGLView::getInstance();
-    int id = 0;
-
-    if(button != glutLeftButton) return;
-
-    if(state == glutMouseDown)
-    {
-        pEGLView->handleTouchesBegin(1, &id, &fx, &fy);
-        buttonDepressed = true;
-    }
-    else if(state == glutMouseUp)
-    {
-        pEGLView->handleTouchesEnd(1, &id, &fx, &fy);
-        buttonDepressed = false;
-    }
-}
-
-extern "C" void motionCB(int x, int y)
-{
-    float fx = x;
-    float fy = y;
-    EGLView* pEGLView = EGLView::getInstance();
-    int id = 0;
-
-    if(buttonDepressed)
-    {
-        pEGLView->handleTouchesMove(1, &id, &fx, &fy);
+    switch (fstate) {
+        case 0:
+            pEGLView->handleTouchesBegin(1, &finger, &fx, &fy);
+            break;
+        case 1:
+            pEGLView->handleTouchesMove(1, &finger, &fx, &fy);
+            break;
+        case 2:
+            pEGLView->handleTouchesEnd(1, &finger, &fx, &fy);
+            break;
+        default:
+            assert(false);
     }
 }
 
@@ -133,6 +111,91 @@ void onReleaseKey(unsigned char key, int x, int y) {
 
 EGLView::EGLView()
 {
+    // mouse & touches handler
+    EM_ASM({
+        var getMousePos = function(event) {
+            var rect = Module["canvas"].getBoundingClientRect();
+            var cw = Module["canvas"].width;
+            var ch = Module["canvas"].height;
+            var scrollX = ((typeof window.scrollX !== 'undefined') ? window.scrollX : window.pageXOffset);
+            var scrollY = ((typeof window.scrollY !== 'undefined') ? window.scrollY : window.pageYOffset);
+            
+            var x = event.pageX - (scrollX + rect.left);
+            var y = event.pageY - (scrollY + rect.top);
+
+            x = x * (cw / rect.width);
+            y = y * (ch / rect.height);
+            return [x, y];
+        };
+
+        var isTouchHeld = false;
+        var isTouchDevice = 'ontouchstart' in document.documentElement;
+        if (isTouchDevice) {
+            var multitouch = function(event) {
+                if (event.target != Module['canvas']) {
+                  return;
+                }
+
+                var touches = event.changedTouches,
+                    main = touches[0],
+                    identifier = main.identifier;
+
+                var xy = getMousePos(main);
+                var type;
+
+                switch(event.type) {
+                    case "touchstart": type = 0; break;
+                    case "touchmove": type = 1; break;
+                    case "touchend": type = 2; break;
+                    default: return;
+                }
+
+                if (identifier == 0) {
+                    isTouchHeld = type == 0 || type == 1;
+                }
+
+                Module['_ccEglViewMultiTouchEvent'](identifier, type, xy[0], xy[1]);
+                event.preventDefault();
+            };
+
+            window.addEventListener("touchmove", multitouch, true);
+            window.addEventListener("touchstart", multitouch, true);
+            window.addEventListener("touchend", multitouch, true);
+        };
+
+        var isMousePressed = false;
+        var onMouseButtonDown =function(event) {
+            if (isTouchHeld || event.button != 0 || event.target != Module["canvas"]) {
+                return;
+            }
+            var xy = getMousePos(event);
+            Module['_ccEglViewMultiTouchEvent'](0, 0, xy[0], xy[1]);
+            isMousePressed = true;
+            event.preventDefault();
+        };
+        var onMouseMove = function(event) {
+            if (!isMousePressed || event.target != Module["canvas"]) {
+                return;
+            }
+            var xy = getMousePos(event);
+            Module['_ccEglViewMultiTouchEvent'](0, 1, xy[0], xy[1]);
+            event.preventDefault();
+        };
+        var onMouseButtonUp = function(event) {
+            if (!isMousePressed || event.button != 0 || event.target != Module["canvas"]) {
+                return;
+            }
+            var xy = getMousePos(event);
+            Module['_ccEglViewMultiTouchEvent'](0, 2, xy[0], xy[1]);
+            isMousePressed = false;
+            event.preventDefault();
+        };
+
+        window.addEventListener("mousemove", onMouseMove, true);
+        window.addEventListener("mousedown", onMouseButtonDown, true);
+        window.addEventListener("mouseup", onMouseButtonUp, true);
+    });
+
 	_eglDisplay = EGL_NO_DISPLAY;
 	_eglContext = EGL_NO_CONTEXT;
 	_eglSurface = EGL_NO_SURFACE;
@@ -160,9 +223,6 @@ EGLView::EGLView()
     free(dummyArgv[0]);
     free(dummyArgv);
 
-    glutMouseFunc(&mouseCB);
-    glutMotionFunc(&motionCB);
-    glutPassiveMotionFunc(&motionCB);
     glutSpecialFunc(&onPressKeyInt);
     glutSpecialUpFunc(&onReleaseKeyInt);
     glutKeyboardFunc(&onPressKey);
