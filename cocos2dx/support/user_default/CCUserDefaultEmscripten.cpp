@@ -98,7 +98,7 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue) {
 
 
 void UserDefault::setBoolForKey(const char* pKey, bool value) {
-    setIntegerForKey(pKey, pKey ? 1 : 0);
+    setIntegerForKey(pKey, value ? 1 : 0);
 }
 
 void UserDefault::setIntegerForKey(const char* pKey, int value) {
