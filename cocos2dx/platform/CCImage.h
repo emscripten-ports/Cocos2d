@@ -180,6 +180,7 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const char *filePath, bool isToRGB = true);
+    bool saveToFile(const char *filePath, Image::Format format, bool isToRGB = true);
 
 protected:
     bool initWithJpgData(const void *data, int dataLen);

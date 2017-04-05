@@ -1395,6 +1395,16 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 }
 #endif
 
+bool Image::saveToFile(const char *filePath, Image::Format format, bool bIsToRGB) {
+    if (format == Image::Format::PNG) {
+        saveImageToPNG(filePath, bIsToRGB);
+    } else if (format == Image::Format::JPG) {
+        saveImageToJPG(filePath);
+    } else {
+        assert(false);
+    }
+}
+
 bool Image::saveImageToPNG(const char * filePath, bool isToRGB)
 {
     bool bRet = false;
