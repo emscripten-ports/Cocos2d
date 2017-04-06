@@ -51,8 +51,8 @@ public:
     //
     // Overrides
     //
-	virtual ActionInstant* clone() const override = 0;
-    virtual ActionInstant * reverse(void) const override = 0;
+	virtual ActionInstant* clone() const override { CC_ASSERT(0); return nullptr; }
+    virtual ActionInstant * reverse(void) const override { CC_ASSERT(0); return nullptr; }
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
     virtual void update(float time) override;

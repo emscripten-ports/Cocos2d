@@ -56,10 +56,10 @@ public:
     const char* description() const;
 
 	/** returns a clone of action */
-	virtual Action* clone() const = 0;
+    virtual Action* clone() const { CC_ASSERT(0); return nullptr; }
 
     /** returns a new action that performs the exactly the reverse action */
-	virtual Action* reverse() const = 0;
+	virtual Action* reverse() const { CC_ASSERT(0); return nullptr; }
 
     //! return true if the action has finished
     virtual bool isDone(void) const;
@@ -101,6 +101,9 @@ public:
     inline int getTag(void) const { return _tag; }
     inline void setTag(int nTag) { _tag = nTag; }
 
+public:
+    /** Create an action */
+    static Action* create();
 protected:
     Node    *_originalTarget;
     /** The "target".
@@ -137,8 +140,8 @@ public:
     //
     // Overrides
     //
-    virtual FiniteTimeAction* reverse() const override = 0;
-	virtual FiniteTimeAction* clone() const override = 0;
+    virtual FiniteTimeAction* reverse() const override { CC_ASSERT(0); return nullptr; }
+	virtual FiniteTimeAction* clone() const override { CC_ASSERT(0); return nullptr; }
 
 protected:
     //! duration in seconds

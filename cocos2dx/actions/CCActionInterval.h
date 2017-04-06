@@ -63,7 +63,8 @@ class CC_DLL ActionInterval : public FiniteTimeAction
 public:
     /** how many seconds had elapsed since the actions started to run. */
     inline float getElapsed(void) { return _elapsed; }
-
+    /** creates the action */
+    static ActionInterval* create(float d);
     /** initializes the action */
     bool initWithDuration(float d);
 
@@ -77,8 +78,8 @@ public:
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
-    virtual ActionInterval* reverse() const override = 0;
-	virtual ActionInterval *clone() const override = 0;
+    virtual ActionInterval* reverse() const override { CC_ASSERT(0); return nullptr; }
+	virtual ActionInterval *clone() const override { CC_ASSERT(0); return nullptr; }
 
 
 protected:

@@ -48,14 +48,16 @@ public:
 
     /** initializes the action */
     bool initWithAction(ActionInterval *pAction);
+    /** creates the action */
+    static ActionEase* create(ActionInterval *pAction);
 
     virtual ActionInterval* getInnerAction();
 
     //
     // Overrides
     //
-	virtual ActionEase* clone() const override = 0;
-    virtual ActionEase* reverse() const override = 0;
+	virtual ActionEase* clone() const override { CC_ASSERT(0); return nullptr; }
+    virtual ActionEase* reverse() const override { CC_ASSERT(0); return nullptr; }
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
@@ -76,6 +78,8 @@ public:
 
     /** Initializes the action with the inner action and the rate parameter */
     bool initWithAction(ActionInterval *pAction, float fRate);
+    /** Creates the action with the inner action and the rate parameter */
+    static EaseRateAction* create(ActionInterval* pAction, float fRate);
 
     /** set rate value for the actions */
     inline void setRate(float rate) { _rate = rate; }
@@ -85,8 +89,8 @@ public:
     //
     // Overrides
     //
-	virtual EaseRateAction* clone() const override = 0;
-    virtual EaseRateAction* reverse() const override = 0;
+	virtual EaseRateAction* clone() const override { CC_ASSERT(0); return nullptr; };
+    virtual EaseRateAction* reverse() const override { CC_ASSERT(0); return nullptr; }
 
 protected:
     float _rate;
@@ -246,7 +250,9 @@ class CC_DLL EaseElastic : public ActionEase
 public:
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
     bool initWithAction(ActionInterval *pAction, float fPeriod = 0.3f);
-
+    /** Creates the action with the inner action and the period in radians (default is 0.3) */
+    static EaseElastic* create(ActionInterval *pAction, float fPeriod);
+    static EaseElastic* create(ActionInterval *pAction);
     /** get period of the wave in radians. default is 0.3 */
     inline float getPeriod(void) const { return _period; }
     /** set period of the wave in radians. */
@@ -255,8 +261,8 @@ public:
     //
     // Overrides
     //
-	virtual EaseElastic* clone() const override = 0;
-	virtual EaseElastic* reverse() const override = 0;
+	virtual EaseElastic* clone() const override { CC_ASSERT(0); return nullptr; }
+	virtual EaseElastic* reverse() const override { CC_ASSERT(0); return nullptr; }
 
 protected:
     float _period;
@@ -328,10 +334,11 @@ class CC_DLL EaseBounce : public ActionEase
 {
 public:
     float bounceTime(float time);
-
+    /** creates the action */
+    static EaseBounce* create(ActionInterval* pAction);
     // Overrides
-	virtual EaseBounce* clone() const override = 0;
-	virtual EaseBounce* reverse() const override = 0;
+	virtual EaseBounce* clone() const override { CC_ASSERT(0); return nullptr; }
+	virtual EaseBounce* reverse() const override { CC_ASSERT(0); return nullptr; }
 };
 
 /** 

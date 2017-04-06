@@ -29,6 +29,24 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of GridAction
 
+GridAction* GridAction::create(float duration, const Size& gridSize)
+{
+    GridAction *pAction = new GridAction();
+    if (pAction)
+    {
+        if (pAction->initWithDuration(duration, gridSize))
+        {
+            pAction->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(pAction);
+        }
+    }
+
+    return pAction;
+}
+
 bool GridAction::initWithDuration(float duration, const Size& gridSize)
 {
     if (ActionInterval::initWithDuration(duration))

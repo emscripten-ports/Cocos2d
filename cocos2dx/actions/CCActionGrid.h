@@ -41,6 +41,9 @@ class GridBase;
 class CC_DLL GridAction : public ActionInterval
 {
 public:
+    /** creates the action with size and duration */
+    static GridAction* create(float duration, const Size& gridSize);
+
     /** initializes the action with size and duration */
     bool initWithDuration(float duration, const Size& gridSize);
 
@@ -48,7 +51,7 @@ public:
     virtual GridBase* getGrid();
 
     // overrides
-	virtual GridAction * clone() const override = 0;
+	virtual GridAction * clone() const override { CC_ASSERT(0); return nullptr; }
     virtual GridAction* reverse() const override;
     virtual void startWithTarget(Node *target) override;
 
@@ -63,7 +66,11 @@ protected:
 class CC_DLL Grid3DAction : public GridAction
 {
 public:
-
+    /** creates the action with size and duration 
+     *  @js NA
+     *  @lua NA
+     */
+    static Grid3DAction* create(float duration, const Size& gridSize);
     /** returns the grid */
     virtual GridBase* getGrid(void);
     /** returns the vertex than belongs to certain position in the grid */
@@ -82,7 +89,7 @@ public:
     void setVertex(const Point& position, const Vertex3F& vertex);
 
     // Overrides
-	virtual Grid3DAction * clone() const override = 0;
+	virtual Grid3DAction * clone() const override { CC_ASSERT(0); return nullptr; }
 };
 
 /** @brief Base class for TiledGrid3D actions */
@@ -111,7 +118,7 @@ public:
     virtual GridBase* getGrid(void);
 
     // Override
-    virtual TiledGrid3DAction * clone() const override = 0;
+    virtual TiledGrid3DAction * clone() const override { CC_ASSERT(0); return nullptr; }
 };
 
 /** @brief AccelDeccelAmplitude action */

@@ -80,6 +80,15 @@ void ExtraAction::step(float dt)
 // IntervalAction
 //
 
+ActionInterval* ActionInterval::create(float d)
+{
+    ActionInterval *pAction = new ActionInterval();
+    pAction->initWithDuration(d);
+    pAction->autorelease();
+
+    return pAction;
+}
+
 bool ActionInterval::initWithDuration(float d)
 {
     _duration = d;

@@ -46,6 +46,13 @@ Action::~Action()
     CCLOGINFO("cocos2d: deallocing");
 }
 
+Action* Action::create()
+{
+    Action * pRet = new Action();
+    pRet->autorelease();
+    return pRet;
+}
+
 const char* Action::description() const
 {
     return String::createWithFormat("<Action | Tag = %d>", _tag)->getCString();

@@ -41,6 +41,23 @@ NS_CC_BEGIN
 //
 // EaseAction
 //
+ActionEase* ActionEase::create(ActionInterval *pAction)
+{
+    ActionEase *pRet = new ActionEase();
+    if (pRet)
+    {
+        if (pRet->initWithAction(pAction))
+        {
+            pRet->autorelease();
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(pRet);
+        }
+    }
+
+    return pRet;
+}
 
 bool ActionEase::initWithAction(ActionInterval *pAction)
 {
@@ -87,6 +104,24 @@ ActionInterval* ActionEase::getInnerAction()
 //
 // EaseRateAction
 //
+EaseRateAction* EaseRateAction::create(ActionInterval *pAction, float fRate)
+{
+    EaseRateAction *pRet = new EaseRateAction();
+    if (pRet)
+    {
+        if (pRet->initWithAction(pAction, fRate))
+        {
+            pRet->autorelease();
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(pRet);
+        }
+    }
+
+    return pRet;
+}
+
 
 bool EaseRateAction::initWithAction(ActionInterval *pAction, float fRate)
 {
@@ -491,6 +526,29 @@ EaseSineInOut* EaseSineInOut::reverse() const
 // EaseElastic
 //
 
+EaseElastic* EaseElastic::create(ActionInterval *pAction)
+{
+    return EaseElastic::create(pAction, 0.3f);
+}
+
+EaseElastic* EaseElastic::create(ActionInterval *pAction, float fPeriod/* = 0.3f*/)
+{
+    EaseElastic *pRet = new EaseElastic();
+    if (pRet)
+    {
+        if (pRet->initWithAction(pAction, fPeriod))
+        {
+            pRet->autorelease();
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(pRet);
+        }
+    }
+
+    return pRet; 
+}
+
 bool EaseElastic::initWithAction(ActionInterval *pAction, float fPeriod/* = 0.3f*/)
 {
     if (ActionEase::initWithAction(pAction))
@@ -692,6 +750,23 @@ EaseElasticInOut* EaseElasticInOut::reverse() const
 //
 // EaseBounce
 //
+EaseBounce* EaseBounce::create(ActionInterval* pAction)
+{
+    EaseBounce *pRet = new EaseBounce();
+    if (pRet)
+    {
+        if (pRet->initWithAction(pAction))
+        {
+            pRet->autorelease();
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(pRet);
+        }
+    }
+
+    return pRet; 
+}
 
 float EaseBounce::bounceTime(float time)
 {
