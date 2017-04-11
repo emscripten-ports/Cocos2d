@@ -110,4 +110,9 @@ LanguageType Application::getCurrentLanguage()
     return LanguageType::ENGLISH;
 }
 
+int Application::getCurrentLanguageID()
+{
+    return (int) getCurrentLanguage();
+}
+
 NS_CC_END;

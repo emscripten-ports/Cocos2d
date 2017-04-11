@@ -74,6 +74,7 @@ void EGLView::setFrameSize(float width, float height)
     //Inits SDL2
     eResult = SDL_Init(SDL_INIT_VIDEO) == 0;
     if (!eResult) {
+        CCLOG("SDL_Init failed: %s\n", SDL_GetError());
         CCAssert(0, "fail to init the SDL");
     }
 

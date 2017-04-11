@@ -108,4 +108,13 @@ void Object::acceptVisitor(DataVisitor &visitor)
     visitor.visitObject(this);
 }
 
+Object *Clonable::copy() const
+{
+    Clonable* clonable = clone();
+    Object* copy = dynamic_cast<Object*>(clonable);
+    CCAssert(copy, "Copy is deprecated, use clone instead");
+    copy->retain(); // in Cocos2d v2, retain does not do autorelease as clone do
+    return copy;
+}
+
 NS_CC_END

@@ -53,12 +53,7 @@ public:
     /** returns a copy of the object.
      @deprecated Use clone() instead
      */
-    CC_DEPRECATED_ATTRIBUTE Object* copy() const
-    {
-        // use "clone" instead
-        CC_ASSERT(false);
-        return nullptr;
-    }
+    CC_DEPRECATED_ATTRIBUTE Object* copy() const;
 };
 
 class CC_DLL Object

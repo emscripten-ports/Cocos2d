@@ -34,11 +34,13 @@ public:
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
-	/**
-	@brief Get current language config
-	@return Current language config
-	*/
-	virtual LanguageType getCurrentLanguage();
+    /**
+    @brief Get current language config
+    @return Current language config
+    */
+    virtual LanguageType getCurrentLanguage();
+
+    int getCurrentLanguageID();
 
     /**
      @brief Get target platform

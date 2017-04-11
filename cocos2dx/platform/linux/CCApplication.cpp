@@ -175,7 +175,12 @@ LanguageType Application::getCurrentLanguage()
 		ret = LanguageType::POLISH;
 	}
 	
-	return ret;
+    return ret;
+}
+
+int Application::getCurrentLanguageID()
+{
+    return (int) getCurrentLanguage();
 }
 
 NS_CC_END

@@ -44,6 +44,8 @@ public:
 	/* override functions */
 	virtual LanguageType getCurrentLanguage();
 
+    int getCurrentLanguageID();
+
 	/**
      *  Sets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->setSearchPaths() instead.
