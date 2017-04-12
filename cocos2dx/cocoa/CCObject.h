@@ -96,12 +96,7 @@ typedef void (Object::*SEL_MenuHandler)(Object*);
 typedef void (Object::*SEL_EventHandler)(Event*);
 typedef int (Object::*SEL_Compare)(Object*);
 
-#ifndef EMSCRIPTEN
-// if defined in emscripten should use with -s EMULATE_FUNCTION_POINTER_CASTS=1
-#define EMULATE_FUNCTION_POINTER_CASTS=1
-#endif
-
-#ifdef EMULATE_FUNCTION_POINTER_CASTS
+#if EMULATE_FUNCTION_POINTER_CASTS==1
 #define schedule_selector(_SELECTOR) (cocos2d::SEL_SCHEDULE)(&_SELECTOR)
 #define callfunc_selector(_SELECTOR) (cocos2d::SEL_CallFunc)(&_SELECTOR)
 #define callfuncN_selector(_SELECTOR) (cocos2d::SEL_CallFuncN)(&_SELECTOR)
@@ -116,10 +111,21 @@ typedef int (Object::*SEL_Compare)(Object*);
 #define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
 #define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
 #define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
-#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
 #define event_selector(_SELECTOR) static_cast<cocos2d::SEL_EventHandler>(&_SELECTOR)
 #define compare_selector(_SELECTOR) static_cast<cocos2d::SEL_Compare>(&_SELECTOR)
+
+#define menu_selector(_SELECTOR) menu_selector_impl(&_SELECTOR)
+template <typename R, typename O, typename ... Types>
+cocos2d::SEL_MenuHandler menu_selector_impl(R(O::*f)(Types ...)) {
+    static_assert(std::is_same<std::integral_constant<int, sizeof ...(Types)>, std::integral_constant<int, 1>>::value,
+                  "menu_selector should accept one argument - CCObject*");
+    return (cocos2d::SEL_MenuHandler) f;
+}
 #endif
+
+#define add_schedule_selector(func) void schedule_selector_##func(float) { func(); }
+#define add_menu_selector(func) void menu_selector_##func(Object*) { func(); }
+
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
 #define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
