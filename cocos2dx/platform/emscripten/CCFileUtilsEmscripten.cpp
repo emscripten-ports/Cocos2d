@@ -35,16 +35,10 @@ bool FileUtilsEmscripten::init()
 
 string FileUtilsEmscripten::getWritablePath()
 {
-    // Let's write it in the current working directory's data folder
     char cwd[FILENAME_MAX] = {0};
-
     getcwd(cwd, FILENAME_MAX - 1);
     cwd[FILENAME_MAX-1] = '\0';
-
-    std::string path = cwd;
-    path += "/data/";
-
-    return path;
+    return cwd;
 }
 
 bool FileUtilsEmscripten::isAbsolutePath(const std::string& strPath)
