@@ -44,4 +44,62 @@ SOURCES =  common/etc/etc1.cpp \
   common/jpeg-9b/jquant2.c \
   common/jpeg-9b/jutils.c \
   common/jpeg-9b/jmemmgr.c \
-  common/jpeg-9b/jmemnobs.c
+  common/jpeg-9b/jmemnobs.c \
+	common/libwebp-0.6.0/src/dec/alpha_dec.c \
+	common/libwebp-0.6.0/src/dec/buffer_dec.c \
+	common/libwebp-0.6.0/src/dec/frame_dec.c \
+	common/libwebp-0.6.0/src/dec/idec_dec.c \
+	common/libwebp-0.6.0/src/dec/io_dec.c \
+	common/libwebp-0.6.0/src/dec/quant_dec.c \
+	common/libwebp-0.6.0/src/dec/tree_dec.c \
+	common/libwebp-0.6.0/src/dec/vp8_dec.c \
+	common/libwebp-0.6.0/src/dec/vp8l_dec.c \
+	common/libwebp-0.6.0/src/dec/webp_dec.c \
+  common/libwebp-0.6.0/src/dsp/alpha_processing.c \
+  common/libwebp-0.6.0/src/dsp/alpha_processing_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/alpha_processing_neon.c \
+  common/libwebp-0.6.0/src/dsp/alpha_processing_sse2.c \
+  common/libwebp-0.6.0/src/dsp/alpha_processing_sse41.c \
+  common/libwebp-0.6.0/src/dsp/cpu.c \
+  common/libwebp-0.6.0/src/dsp/dec.c \
+  common/libwebp-0.6.0/src/dsp/dec_clip_tables.c \
+  common/libwebp-0.6.0/src/dsp/dec_mips32.c \
+  common/libwebp-0.6.0/src/dsp/dec_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/dec_msa.c \
+  common/libwebp-0.6.0/src/dsp/dec_neon.c \
+  common/libwebp-0.6.0/src/dsp/dec_sse2.c \
+  common/libwebp-0.6.0/src/dsp/dec_sse41.c \
+  common/libwebp-0.6.0/src/dsp/filters.c \
+  common/libwebp-0.6.0/src/dsp/filters_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/filters_msa.c \
+  common/libwebp-0.6.0/src/dsp/filters_neon.c \
+  common/libwebp-0.6.0/src/dsp/filters_sse2.c \
+  common/libwebp-0.6.0/src/dsp/lossless.c \
+  common/libwebp-0.6.0/src/dsp/lossless_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/lossless_msa.c \
+  common/libwebp-0.6.0/src/dsp/lossless_neon.c \
+  common/libwebp-0.6.0/src/dsp/lossless_sse2.c \
+  common/libwebp-0.6.0/src/dsp/rescaler.c \
+  common/libwebp-0.6.0/src/dsp/rescaler_mips32.c \
+  common/libwebp-0.6.0/src/dsp/rescaler_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/rescaler_msa.c \
+  common/libwebp-0.6.0/src/dsp/rescaler_neon.c \
+  common/libwebp-0.6.0/src/dsp/rescaler_sse2.c \
+  common/libwebp-0.6.0/src/dsp/upsampling.c \
+  common/libwebp-0.6.0/src/dsp/upsampling_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/upsampling_msa.c \
+  common/libwebp-0.6.0/src/dsp/upsampling_neon.c \
+  common/libwebp-0.6.0/src/dsp/upsampling_sse2.c \
+  common/libwebp-0.6.0/src/dsp/yuv.c \
+  common/libwebp-0.6.0/src/dsp/yuv_mips32.c \
+  common/libwebp-0.6.0/src/dsp/yuv_mips_dsp_r2.c \
+  common/libwebp-0.6.0/src/dsp/yuv_sse2.c \
+	common/libwebp-0.6.0/src/utils/bit_reader_utils.c \
+	common/libwebp-0.6.0/src/utils/color_cache_utils.c \
+	common/libwebp-0.6.0/src/utils/filters_utils.c \
+	common/libwebp-0.6.0/src/utils/huffman_utils.c \
+	common/libwebp-0.6.0/src/utils/quant_levels_dec_utils.c \
+	common/libwebp-0.6.0/src/utils/random_utils.c \
+	common/libwebp-0.6.0/src/utils/rescaler_utils.c \
+	common/libwebp-0.6.0/src/utils/thread_utils.c \
+	common/libwebp-0.6.0/src/utils/utils.c

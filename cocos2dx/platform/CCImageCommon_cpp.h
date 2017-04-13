@@ -275,7 +275,8 @@ bool Image::initWithImageFile(const char * strPath)
         return false;
     }
 
-#ifdef EMSCRIPTEN
+// @caiiiycuk: libpng is better, because it can handle webp
+#ifdef _EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
     // operations underneath. Consequently, loading images via IMG_Load (an SDL
     // API) will be a lot faster than running libpng et al as compiled with
