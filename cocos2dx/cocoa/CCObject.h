@@ -126,6 +126,11 @@ cocos2d::SEL_MenuHandler menu_selector_impl(R(O::*f)(Types ...)) {
 #define add_schedule_selector(func) void schedule_selector_##func(float) { func(); }
 #define add_menu_selector(func) void menu_selector_##func(Object*) { func(); }
 
+#define schedule_selector_(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR##_schedule_selector)
+#define menu_selector_(_SELECTOR) menu_selector_impl(&_SELECTOR##_menu_selector)
+#define add_schedule_selector_(func) void func##_schedule_selector(float) { func(); }
+#define add_menu_selector_(func) void func##_menu_selector(Object*) { func(); }
+
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
 #define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
