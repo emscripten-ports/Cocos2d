@@ -103,13 +103,14 @@ bool ActionInterval::initWithDuration(float d)
 
     _elapsed = 0;
     _firstTick = true;
+    _done = false;
 
     return true;
 }
 
 bool ActionInterval::isDone(void) const
 {
-    return _elapsed >= _duration;
+    return _done;
 }
 
 void ActionInterval::step(float dt)
@@ -130,6 +131,8 @@ void ActionInterval::step(float dt)
                           )
                       )
                  );
+
+    _done =  _elapsed >= _duration;
 }
 
 void ActionInterval::setAmplitudeRate(float amp)

@@ -51,11 +51,14 @@ public:
     //
     // Overrides
     //
+    virtual void startWithTarget(Node *target) override;
 	virtual ActionInstant* clone() const override { CC_ASSERT(0); return nullptr; }
     virtual ActionInstant * reverse(void) const override { CC_ASSERT(0); return nullptr; }
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
     virtual void update(float time) override;
+private:
+    bool _done;
 };
 
 /** @brief Show the node

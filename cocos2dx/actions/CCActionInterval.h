@@ -84,7 +84,8 @@ public:
 
 protected:
     float _elapsed;
-    bool   _firstTick;
+    bool _firstTick;
+    bool _done;
 };
 
 /** @brief Runs actions sequentially, one after another
