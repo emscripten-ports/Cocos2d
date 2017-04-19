@@ -363,7 +363,8 @@ bool Image::initWithImageData(const void * data, int dataLen)
         case Format::TIFF:
             return initWithTiffData(data, dataLen);
         case Format::WEBP:
-            return initWithWebpData(data, dataLen);
+        case Format::WEBP_HALF:
+            return initWithWebpData(data, dataLen, _fileType == Format::WEBP_HALF);
         case Format::PVR:
             return initWithPVRData(data, dataLen);
         case Format::ETC:
@@ -462,6 +463,10 @@ Image::Format Image::detectFormat(const void* data, int dataLen)
         return Format::TIFF;
     }else if (isWebp(data, dataLen))
     {
+        if (((const char*) data)[dataLen - 2] == 'h' &&
+                ((const char*) data)[dataLen - 1] == 's') {
+            return Format::WEBP_HALF;
+        }
         return Format::WEBP;
     }else if (isPvr(data, dataLen))
     {
@@ -1286,7 +1291,7 @@ bool Image::initWithPVRData(const void *data, int dataLen)
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
 }
 
-bool Image::initWithWebpData(const void *data, int dataLen)
+bool Image::initWithWebpData(const void *data, int dataLen, bool halfsize)
 {
 	bool bRet = false;
 	do
@@ -1318,6 +1323,48 @@ bool Image::initWithWebpData(const void *data, int dataLen)
         
         bRet = true;
 	} while (0);
+
+        if (bRet && halfsize) {
+            int _nwidth = _width * 2;
+            int _nheight = _height * 2;
+            unsigned char* _ndata = new unsigned char[_nwidth * _nheight * 4];
+            uint32_t* rawOutput = reinterpret_cast<uint32_t*>(_ndata);
+            const uint32_t* rawInput = reinterpret_cast<const uint32_t*>(_data);
+
+            // YD compensates for the x loop by subtracting the width back out
+            int YD = (_height / _nheight) * _width - _width;
+            int YR = _height % _nheight;
+            int XD = _width / _nwidth;
+            int XR = _width % _nwidth;
+            int outOffset = 0;
+            int inOffset = 0;
+
+            for (int y = _nheight, YE = 0; y > 0; y--) {
+                for (int x = _nwidth, XE = 0; x > 0; x--) {
+                    rawOutput[outOffset++]= rawInput[inOffset];
+                    inOffset+=XD;
+                    XE+=XR;
+                    if (XE >= _nwidth) {
+                        XE-= _nwidth;
+                        inOffset++;
+                    }
+                }
+                inOffset+= YD;
+                YE+= YR;
+                if (YE >= _nheight) {
+                    YE -= _nheight;
+                    inOffset+=_width;
+                }
+            }
+
+            delete []_data;
+            _data = NULL;
+
+            _width = _nwidth;
+            _height = _nheight;
+            _data = _ndata;
+        }
+
 	return bRet;
 }
 

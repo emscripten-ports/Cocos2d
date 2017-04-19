@@ -71,6 +71,7 @@ public:
         TIFF,
         //! WebP
         WEBP,
+        WEBP_HALF,
         //! PVR
         PVR,
         //! ETC
@@ -186,7 +187,7 @@ protected:
     bool initWithJpgData(const void *data, int dataLen);
     bool initWithPngData(const void *data, int dataLen);
     bool initWithTiffData(const void *data, int dataLen);
-    bool initWithWebpData(const void *data, int dataLen);
+    bool initWithWebpData(const void *data, int dataLen, bool halfsize = false);
     bool initWithPVRData(const void *data, int dataLen);
     bool initWithPVRv2Data(const void *data, int dataLen);
     bool initWithPVRv3Data(const void *data, int dataLen);
