@@ -131,6 +131,7 @@ EGLView::EGLView()
         var isTouchHeld = false;
         var isTouchDevice = 'ontouchstart' in document.documentElement;
         if (isTouchDevice) {
+            var heldTouches = {};
             var multitouch = function(event) {
                 if (event.target != Module['canvas']) {
                   return;
@@ -150,9 +151,15 @@ EGLView::EGLView()
                     default: return;
                 }
 
-                if (identifier == 0) {
-                    isTouchHeld = type == 0 || type == 1;
+                if (type == 0) {
+                    heldTouches[identifier] = 1;
                 }
+
+                if (type == 2) {
+                    delete heldTouches[identifier];
+                }
+
+                isTouchHeld = Object.keys(heldTouches).length > 0;
 
                 Module['_ccEglViewMultiTouchEvent'](identifier, type, xy[0], xy[1]);
                 event.preventDefault();
