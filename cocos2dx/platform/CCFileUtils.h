@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <string>
 #include <vector>
 #include <map>
+#include <CCData.h>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
@@ -98,6 +99,12 @@ public:
      */
     virtual unsigned char* getFileData(const char* filename, const char* pszMode, unsigned long * pSize);
 
+    virtual Data* getDataFromFile(const std::string& filename) {
+        unsigned long size = 0;
+        unsigned char* data = getFileData(filename.c_str(), "rb", &size);
+        return Data::create(data, size);
+    }
+
     /**
      *  Gets resource file data from a zip file.
      *
@@ -155,6 +162,9 @@ public:
      @since v2.1
      */
     virtual std::string fullPathForFilename(const char* filename);
+    virtual std::string fullPathForFilename(const std::string &filename) {
+        return fullPathForFilename(filename.c_str());
+    }
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.

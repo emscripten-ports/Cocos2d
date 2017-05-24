@@ -133,6 +133,9 @@ public:
      You should retain the returned copy if you are going to use it.
      */
     SpriteFrame* getSpriteFrameByName(const char *name);
+    SpriteFrame* getSpriteFrameByName(const std::string &name) {
+        return getSpriteFrameByName(name.c_str());
+    }
 
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const char *name) { return getSpriteFrameByName(name); }

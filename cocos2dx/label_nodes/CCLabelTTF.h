@@ -65,6 +65,9 @@ public:
      @since v2.0.1
      */
     static LabelTTF * create(const char *string, const char *fontName, float fontSize);
+    static LabelTTF * create(const std::string &string, const std::string &fontName, float fontSize) {
+        return create(string.c_str(), fontName.c_str(), fontSize);
+    }
     
     /** creates a LabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      @since v2.0.1
@@ -78,6 +81,11 @@ public:
     static LabelTTF * create(const char *string, const char *fontName, float fontSize,
                                const Size& dimensions, TextHAlignment hAlignment, 
                                TextVAlignment vAlignment);
+    static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
+                               const Size& dimensions, TextHAlignment hAlignment,
+                               TextVAlignment vAlignment) {
+        return create(string.c_str(), fontName.c_str(), fontSize, dimensions, hAlignment, vAlignment);
+    }
     
     
     /** Create a lable with string and a font definition*/
@@ -134,6 +142,10 @@ public:
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const char *label);
+    virtual void setString(const std::string& label) {
+        setString(label.c_str());
+    }
+
     virtual const char* getString(void) const;
     
     TextHAlignment getHorizontalAlignment() const;

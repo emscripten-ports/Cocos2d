@@ -44,8 +44,15 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 public:
     
     static Label* createWithTTF( const char* label, const char* fntFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 );
+    static Label* createWithTTF( const char* label, const std::string& fntFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 ) {
+        return createWithTTF(label, fntFilePath.c_str(), fontSize, glyphs, lineSize, customGlyphs);
+    }
+    static Label* createWithTTF( const std::string& label, const std::string& fntFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 ) {
+        return createWithTTF(label.c_str(), fntFilePath.c_str(), fontSize, glyphs, lineSize, customGlyphs);
+    }
+
     static Label* createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize = 0 );
-    
+
     virtual ~Label();
              Label();
     

@@ -45,6 +45,11 @@ public:
      */
     virtual void setColor(const Color3B& color) = 0;
 
+    void setTextColor(const Color4B& color) {
+        setColor(Color3B(color.r, color.g, color.b));
+        setOpacity(color.a);
+    }
+
     /**
      * Returns color that is currently used.
      *
@@ -189,6 +194,10 @@ public:
      * @param label A null terminated string
      */
     virtual void setString(const char *label) = 0;
+
+    virtual void setString(const std::string& label) {
+        setString(label.c_str());
+    }
 
     /** 
      * Returns the string that is currently being used in this label 

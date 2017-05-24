@@ -1116,11 +1116,20 @@ public:
      * This method is called internally by onEnter
      */
     void resumeSchedulerAndActions(void);
+
+    void resume(void) {
+        resumeSchedulerAndActions();
+    }
+
     /** 
      * Pauses all scheduled selectors and actions.
      * This method is called internally by onExit
      */
     void pauseSchedulerAndActions(void);
+
+    void pause(void) {
+        pauseSchedulerAndActions();
+    }
     
     /* 
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"

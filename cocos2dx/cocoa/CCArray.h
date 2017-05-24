@@ -170,6 +170,10 @@ public:
 
     /** Add a certain object */
     void addObject(Object* object);
+    void pushBack(Object* object) {
+        addObject(object);
+    }
+
     /** Add all elements of an existing array */
     void addObjectsFromArray(Array* otherArray);
     /** Insert a certain object at a certain index */

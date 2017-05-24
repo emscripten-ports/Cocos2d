@@ -105,6 +105,10 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* create(const char *filename);
+
+    static Sprite* create(const std::string &filename) {
+        return create(filename.c_str());
+    }
     
     /**
      * Creates a sprite with an image filename and a rect.
@@ -154,6 +158,10 @@ public:
      * @return  A valid sprite object that is marked as autoreleased.
      */
     static Sprite* createWithSpriteFrameName(const char *spriteFrameName);
+
+    static Sprite* createWithSpriteFrameName(std::string& spriteFrameName) {
+        return createWithSpriteFrameName(spriteFrameName.c_str());
+    }
     
     /// @}  end of creators group
     
