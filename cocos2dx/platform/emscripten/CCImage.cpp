@@ -207,9 +207,9 @@ public:
 
 	bool getBitmap(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize) {
 		const char* pText = text;
-        int pxSize = (int)fontSize;
+        int pxSize = (int)(fontSize);
 
-        TTF_Font *face = TTF_OpenFont(pFontName, pxSize);
+        TTF_Font *face = TTF_OpenFont("sans-serif", pxSize);
         if(!face)
         {
             return false;
