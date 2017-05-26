@@ -128,7 +128,7 @@ public:
      The frames will be added with one "delay unit".
      @since v0.99.5
      */
-    static Animation* createWithSpriteFrames(Array* arrayOfSpriteFrameNames, float delay = 0.0f);
+    static Animation* createWithSpriteFrames(Array* arrayOfSpriteFrameNames, float delay = 0.0f, int loops = 1);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
@@ -143,7 +143,7 @@ public:
     /** Initializes a Animation with frames and a delay between frames
     @since v0.99.5
     */
-    bool initWithSpriteFrames(Array *pFrames, float delay = 0.0f);
+    bool initWithSpriteFrames(Array *pFrames, float delay = 0.0f, int loops = 1);
 
     /** Initializes a Animation with AnimationFrame
     @since v2.0

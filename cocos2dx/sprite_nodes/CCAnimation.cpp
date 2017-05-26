@@ -79,10 +79,10 @@ Animation* Animation::create(void)
     return pAnimation;
 } 
 
-Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f*/)
+Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f*/, int loops/* = 1*/)
 {
     Animation *pAnimation = new Animation();
-    pAnimation->initWithSpriteFrames(frames, delay);
+    pAnimation->initWithSpriteFrames(frames, delay, loops);
     pAnimation->autorelease();
 
     return pAnimation;
@@ -101,11 +101,11 @@ bool Animation::init()
     return initWithSpriteFrames(NULL, 0.0f);
 }
 
-bool Animation::initWithSpriteFrames(Array *pFrames, float delay/* = 0.0f*/)
+bool Animation::initWithSpriteFrames(Array *pFrames, float delay/* = 0.0f*/, int loops/* = 1*/)
 {
     CCARRAY_VERIFY_TYPE(pFrames, SpriteFrame*);
 
-    _loops = 1;
+    _loops = loops;
     _delayPerUnit = delay;
     Array* pTmpFrames = Array::create();
     setFrames(pTmpFrames);
