@@ -14,13 +14,8 @@ NS_CC_BEGIN;
 
 // sharedApplication pointer
 Application * Application::sm_pSharedApplication = 0;
-long Application::_animationInterval = 1000;
+long Application::_animationInterval = 1.0f/60.0f*1000.0f;
 
-// convert the timespec into milliseconds
-static long time2millis(struct timespec *times)
-{
-    return times->tv_sec*1000 + times->tv_nsec/1000000;
-}
 
 Application::Application()
 {
@@ -43,19 +38,12 @@ extern "C" void mainLoopIter(void)
 
 int Application::run()
 {
-	struct timespec time_struct;
-	long update_time;
-
 	// Initialize instance and cocos2d.
 	if (!applicationDidFinishLaunching())
 	{
 		return 0;
 	}
 
-	clock_gettime(CLOCK_REALTIME, &time_struct);
-	update_time = time2millis(&time_struct);
-
-    // XXX: Set to 1FPS while debugging
     emscripten_set_main_loop(&mainLoopIter, 0, 1);
 	
 	return -1;

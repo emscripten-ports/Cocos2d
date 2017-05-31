@@ -132,7 +132,7 @@ void ActionInterval::step(float dt)
                       )
                  );
 
-    _done =  _elapsed >= _duration;
+    _done =  _done || _elapsed >= _duration;
 }
 
 void ActionInterval::setAmplitudeRate(float amp)
@@ -155,6 +155,7 @@ void ActionInterval::startWithTarget(Node *target)
     FiniteTimeAction::startWithTarget(target);
     _elapsed = 0.0f;
     _firstTick = true;
+    _done = false;
 }
 
 //
@@ -242,6 +243,9 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction
     CCASSERT(pActionOne != NULL, "");
     CCASSERT(pActionTwo != NULL, "");
 
+    _found[0] = _found[1] = false;
+    _started[0] = _started[1] = _stopped[0] = _stopped[1] = 0;
+
     float d = pActionOne->getDuration() + pActionTwo->getDuration();
     ActionInterval::initWithDuration(d);
 
@@ -263,6 +267,37 @@ Sequence* Sequence::clone(void) const
 	return a;
 }
 
+void Sequence::stopActionIfNeeded(int index) {
+    if (!isDone()) {
+        return;
+    }
+
+    if (_started[index] != 1) {
+        printf("WARN! Seq:: started count mistmatch id %d == %d \n", index, _started[index]);
+    }
+
+    if (_stopped[index] != 1) {
+        printf("WARN! Seq:: stopped count mistmatch id %d == %d \n", index, _stopped[index]);
+    }
+
+    if (!_found[index]) {
+        printf("WARN! Seq:: action not even found! id %d _split %f _duration %f\n", index, _split, _duration);
+    }
+
+    if (_started[index] == 0) {
+        printf("WARN! Seq:: force start id %d '%s'\n", index, typeid(*_actions[index]).name());
+        _actions[index]->startWithTarget(_target);
+        if (_stopped[index] != 0) abort();
+    }
+
+    if (_stopped[index] == 0) {
+        printf("WARN! Seq:: force stop id %d '%s'\n", index, typeid(*_actions[index]).name());
+        _actions[index]->update(1.0f);
+        _actions[index]->stop();
+    }
+
+}
+
 Sequence::~Sequence(void)
 {
     CC_SAFE_RELEASE(_actions[0]);
@@ -271,6 +306,9 @@ Sequence::~Sequence(void)
 
 void Sequence::startWithTarget(Node *target)
 {
+    _found[0] = _found[1] = false;
+    _started[0] = _started[1] = _stopped[0] = _stopped[1] = 0;
+
     ActionInterval::startWithTarget(target);
     _split = _actions[0]->getDuration() / _duration;
     _last = -1;
@@ -282,17 +320,23 @@ void Sequence::stop(void)
     if( _last != - 1)
     {
         _actions[_last]->stop();
+        _stopped[_last]++;
+        _found[_last] = true;
     }
+
+    stopActionIfNeeded(0);
+    stopActionIfNeeded(1);
 
     ActionInterval::stop();
 }
 
 void Sequence::update(float t)
 {
+    _done = _done || t >= 1.0f;
     int found = 0;
     float new_t = 0.0f;
 
-    if( t < _split ) {
+    if( t + FLT_EPSILON < _split ) {
         // action[0]
         found = 0;
         if( _split != 0 )
@@ -309,6 +353,8 @@ void Sequence::update(float t)
             new_t = (t-_split) / (1 - _split );
     }
 
+    _found[found] = true;
+
     if ( found==1 ) {
 
         if( _last == -1 ) {
@@ -316,12 +362,16 @@ void Sequence::update(float t)
             _actions[0]->startWithTarget(_target);
             _actions[0]->update(1.0f);
             _actions[0]->stop();
+            _started[0]++;
+            _stopped[0]++;
+            _found[0] = true;
         }
         else if( _last == 0 )
         {
             // switching to action 1. stop action 0.
             _actions[0]->update(1.0f);
             _actions[0]->stop();
+            _stopped[0]++;
         }
     }
 	else if(found==0 && _last==1 )
@@ -332,6 +382,7 @@ void Sequence::update(float t)
 		// "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
 		_actions[1]->update(0);
 		_actions[1]->stop();
+        _stopped[1]++;
 	}
     // Last action found and it is done.
     if( found == _last && _actions[found]->isDone() )
@@ -343,6 +394,7 @@ void Sequence::update(float t)
     if( found != _last )
     {
         _actions[found]->startWithTarget(_target);
+        _started[found]++;
     }
 
     _actions[found]->update(new_t);

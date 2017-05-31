@@ -120,6 +120,12 @@ protected:
     FiniteTimeAction *_actions[2];
     float _split;
     int _last;
+
+    int  _started[2];
+    int  _stopped[2];
+    bool _found[2];
+
+    void stopActionIfNeeded(int index);
 };
 
 /** @brief Repeats an action a number of times.

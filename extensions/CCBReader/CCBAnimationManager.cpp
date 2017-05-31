@@ -953,6 +953,7 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 void CCBSetSpriteFrame::update(float time)
 {
     ((Sprite*)_target)->setDisplayFrame(_spriteFrame);
+    ActionInstant::update(time);
 }
 
 
@@ -1004,6 +1005,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 void CCBSoundEffect::update(float time)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(_soundFile.c_str());
+    ActionInstant::update(time);
 }
 
 

@@ -59,7 +59,7 @@ void ActionInstant::step(float dt) {
 
 void ActionInstant::update(float time) {
     CC_UNUSED_PARAM(time);
-    // nothing
+    _done = true;
 }
 
 //
@@ -80,6 +80,7 @@ Show* Show::create()
 void Show::update(float time) {
     CC_UNUSED_PARAM(time);
     _target->setVisible(true);
+    ActionInstant::update(time);
 }
 
 ActionInstant* Show::reverse() const
@@ -112,6 +113,7 @@ Hide * Hide::create()
 void Hide::update(float time) {
     CC_UNUSED_PARAM(time);
     _target->setVisible(false);
+    ActionInstant::update(time);
 }
 
 ActionInstant *Hide::reverse() const
@@ -146,6 +148,7 @@ void ToggleVisibility::update(float time)
 {
     CC_UNUSED_PARAM(time);
     _target->setVisible(!_target->isVisible());
+    ActionInstant::update(time);
 }
 
 ToggleVisibility * ToggleVisibility::reverse() const
@@ -183,6 +186,7 @@ bool RemoveSelf::init(bool isNeedCleanUp) {
 void RemoveSelf::update(float time) {
 	CC_UNUSED_PARAM(time);
 	_target->removeFromParentAndCleanup(_isNeedCleanUp);
+    ActionInstant::update(time);
 }
 
 RemoveSelf *RemoveSelf::reverse() const
@@ -224,6 +228,7 @@ bool FlipX::initWithFlipX(bool x) {
 void FlipX::update(float time) {
     CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlipX(_flipX);
+    ActionInstant::update(time);
 }
 
 FlipX* FlipX::reverse() const
@@ -264,6 +269,7 @@ bool FlipY::initWithFlipY(bool y) {
 void FlipY::update(float time) {
     CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlipY(_flipY);
+    ActionInstant::update(time);
 }
 
 FlipY* FlipY::reverse() const
@@ -320,6 +326,7 @@ Place * Place::reverse() const
 void Place::update(float time) {
     CC_UNUSED_PARAM(time);
     _target->setPosition(_position);
+    ActionInstant::update(time);
 }
 
 //
@@ -404,6 +411,7 @@ CallFunc * CallFunc::reverse() const
 void CallFunc::update(float time) {
     CC_UNUSED_PARAM(time);
     this->execute();
+    ActionInstant::update(time);
 }
 
 void CallFunc::execute() {
