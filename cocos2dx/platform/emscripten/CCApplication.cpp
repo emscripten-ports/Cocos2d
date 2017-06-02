@@ -95,7 +95,70 @@ Application* Application::sharedApplication()
 
 LanguageType Application::getCurrentLanguage()
 {
-    return LanguageType::ENGLISH;
+    LanguageType ret = LanguageType::ENGLISH;
+    char pLanguageName[16];
+
+    EM_ASM_ARGS({
+        stringToUTF8(window.navigator.language.replace(/-.*/,''), $0, 16);
+    }, pLanguageName);
+
+    if (0 == strcmp("zh", pLanguageName))
+    {
+        ret = LanguageType::CHINESE;
+    }
+    else if (0 == strcmp("en", pLanguageName))
+    {
+        ret = LanguageType::ENGLISH;
+    }
+    else if (0 == strcmp("fr", pLanguageName))
+    {
+        ret = LanguageType::FRENCH;
+    }
+    else if (0 == strcmp("it", pLanguageName))
+    {
+        ret = LanguageType::ITALIAN;
+    }
+    else if (0 == strcmp("de", pLanguageName))
+    {
+        ret = LanguageType::GERMAN;
+    }
+    else if (0 == strcmp("es", pLanguageName))
+    {
+        ret = LanguageType::SPANISH;
+    }
+    else if (0 == strcmp("ru", pLanguageName))
+    {
+        ret = LanguageType::RUSSIAN;
+    }
+    else if (0 == strcmp("ko", pLanguageName))
+    {
+        ret = LanguageType::KOREAN;
+    }
+    else if (0 == strcmp("ja", pLanguageName))
+    {
+        ret = LanguageType::JAPANESE;
+    }
+    else if (0 == strcmp("hu", pLanguageName))
+    {
+        ret = LanguageType::HUNGARIAN;
+    }
+    else if (0 == strcmp("pt", pLanguageName))
+    {
+        ret = LanguageType::PORTUGUESE;
+    }
+    else if (0 == strcmp("ar", pLanguageName))
+    {
+        ret = LanguageType::ARABIC;
+    }
+    else if (0 == strcmp("nb", pLanguageName))
+    {
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if (0 == strcmp("pl", pLanguageName))
+    {
+        ret = LanguageType::POLISH;
+    }
+    return ret;
 }
 
 int Application::getCurrentLanguageID()
