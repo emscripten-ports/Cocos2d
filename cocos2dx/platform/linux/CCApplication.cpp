@@ -174,6 +174,31 @@ LanguageType Application::getCurrentLanguage()
 	{
 		ret = LanguageType::POLISH;
 	}
+    else if (0 == strcmp("vi", pLanguageName))
+    {
+        ret = LanguageType::VIETNAMESE;
+    }
+    else if (0 == strcmp("th", pLanguageName))
+    {
+        ret = LanguageType::THAI;
+    }
+    else if (0 == strcmp("hi", pLanguageName))
+    {
+        ret = LanguageType::HINDI;
+    }
+    else if (0 == strcmp("sw", pLanguageName))
+    {
+        ret = LanguageType::SWAHILI;
+    }
+    else if (0 == strcmp("id", pLanguageName))
+    {
+        ret = LanguageType::INDONESIAN;
+    }
+    else if (0 == strcmp("af", pLanguageName))
+    {
+        ret = LanguageType::AFRIKAANS;
+    }
+
 	
     return ret;
 }

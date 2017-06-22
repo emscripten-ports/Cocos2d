@@ -99,7 +99,12 @@ LanguageType Application::getCurrentLanguage()
     char pLanguageName[16];
 
     EM_ASM_ARGS({
-        stringToUTF8(window.navigator.language.replace(/-.*/,''), $0, 16);
+        var lang = localStorage.getItem('localization_language');
+        if (lang == null) {
+            stringToUTF8(window.navigator.language.replace(/-.*/,''), $0, 16);
+        } else {
+            stringToUTF8(lang, $0, 16);
+        }
     }, pLanguageName);
 
     if (0 == strcmp("zh", pLanguageName))

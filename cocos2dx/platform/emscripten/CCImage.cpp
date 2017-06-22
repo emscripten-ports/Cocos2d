@@ -209,7 +209,8 @@ public:
 		const char* pText = text;
         int pxSize = (int)(fontSize);
 
-        TTF_Font *face = TTF_OpenFont("sans-serif", pxSize);
+        std::string fontName = std::string("\"") + pFontName + "\"";
+        TTF_Font *face = TTF_OpenFont(fontName.c_str(), pxSize);
         if(!face)
         {
             return false;

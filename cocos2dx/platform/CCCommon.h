@@ -70,7 +70,14 @@ enum class LanguageType
     PORTUGUESE,
     ARABIC,
     NORWEGIAN,
-    POLISH
+    POLISH,
+    // I don't know from where this codes
+    AFRIKAANS,
+    HINDI,
+    INDONESIAN,
+    SWAHILI,
+    THAI,
+    VIETNAMESE
 };
 
 // END of platform group
