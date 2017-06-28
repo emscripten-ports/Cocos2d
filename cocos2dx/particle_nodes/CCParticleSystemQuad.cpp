@@ -43,6 +43,17 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles, ParticleBatchNode* batchNode, Rect rect) {
+    //@caiiiycuk
+    _batchNode = batchNode;
+    if (ParticleSystem::initWithTotalParticles(numberOfParticles)) {
+        setBatchNode(_batchNode);
+        initTexCoordsWithRect(rect);
+        return true;
+    }
+    return false;
+}
+
 //implementation ParticleSystemQuad
 // overriding the init method
 bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)

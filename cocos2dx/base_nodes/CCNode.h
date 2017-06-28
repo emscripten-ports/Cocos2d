@@ -1307,6 +1307,14 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+    bool isTransformDirty() const {
+        return _transformDirty;
+    }
+
+    const AffineTransform& getTransformStored() const {
+        return _transform;
+    }
+
 private:
     /// lazy allocs
     void childrenAlloc(void);

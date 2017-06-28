@@ -116,6 +116,7 @@ ParticleSystem::ParticleSystem()
 , _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _opacityModifyRGB(false)
 , _positionType(PositionType::FREE)
+, _spawnedParticle(false)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -450,6 +451,8 @@ ParticleSystem::~ParticleSystem()
 
 bool ParticleSystem::addParticle()
 {
+    _spawnedParticle = true;
+
     if (this->isFull())
     {
         return false;

@@ -46,6 +46,7 @@ void b2CollideCircles(
 
     manifold->points[0].localPoint = circleB->m_p;
     manifold->points[0].id.key = 0;
+    manifold->penetration = radius - sqrtf(distSqr);
 }
 
 void b2CollidePolygonAndCircle(
@@ -99,6 +100,7 @@ void b2CollidePolygonAndCircle(
         manifold->localPoint = 0.5f * (v1 + v2);
         manifold->points[0].localPoint = circleB->m_p;
         manifold->points[0].id.key = 0;
+        manifold->penetration = -separation + circleB->m_radius;
         return;
     }
 
@@ -151,4 +153,5 @@ void b2CollidePolygonAndCircle(
         manifold->points[0].localPoint = circleB->m_p;
         manifold->points[0].id.key = 0;
     }
+    manifold->penetration = -separation + circleB->m_radius;
 }

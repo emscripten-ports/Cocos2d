@@ -115,6 +115,12 @@ struct b2Vec2
         x *= a; y *= a;
     }
 
+    /// Divide this vector by a scalar.
+    void operator /= (float32 a)
+    {
+        x /= a; y /= a;
+    }
+
     /// Get the length of this vector (the norm).
     float32 Length() const
     {
@@ -154,6 +160,21 @@ struct b2Vec2
     {
         return b2Vec2(-y, x);
     }
+
+    float32 Angle() const
+    {
+        #ifdef __BLACKBERRY__
+        return std::atan2f(y, x);
+        #else
+        return atan2f(y, x);
+        #endif
+    }
+
+    float32 DotProduct(const b2Vec2& vec)
+    {
+        return x * vec.x + y * vec.y;
+    }
+
 
     float32 x, y;
 };
@@ -480,6 +501,11 @@ inline b2Vec2 operator * (float32 s, const b2Vec2& a)
 inline bool operator == (const b2Vec2& a, const b2Vec2& b)
 {
     return a.x == b.x && a.y == b.y;
+}
+
+inline bool operator != (const b2Vec2& a, const b2Vec2& b)
+{
+    return !(a.x == b.x && a.y == b.y);
 }
 
 inline float32 b2Distance(const b2Vec2& a, const b2Vec2& b)

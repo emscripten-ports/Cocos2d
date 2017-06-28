@@ -409,6 +409,15 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const char *pszName)
             }
         }
     }
+
+    if (!frame) {
+        const char* subpath = strstr(pszName, "/") + 1;
+        if (subpath) {
+            return getSpriteFrameByName(subpath);
+        }
+        abort();
+    }
+
     return frame;
 }
 

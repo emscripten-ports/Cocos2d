@@ -193,12 +193,28 @@ public:
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
     static LabelBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment, Point imageOffset);
+
+    static LabelBMFont * create(const std::string &str, const std::string &fntFile, float width, TextHAlignment alignment, Point imageOffset) {
+        return create(str.c_str(), fntFile.c_str(), width, alignment, imageOffset);
+    }
     
 	static LabelBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment);
 
+    static LabelBMFont * create(const std::string &str, const std::string &fntFile, float width, TextHAlignment alignment) {
+        return create(str.c_str(), fntFile.c_str(), width, alignment);
+    }
+
 	static LabelBMFont * create(const char *str, const char *fntFile, float width);
 
+    static LabelBMFont * create(const std::string &str, const std::string &fntFile, float width) {
+        return create(str.c_str(), fntFile.c_str(), width);
+    }
+
 	static LabelBMFont * create(const char *str, const char *fntFile);
+
+    static LabelBMFont * create(const std::string &str, const std::string &fntFile) {
+        return create(str.c_str(), fntFile.c_str());
+    }
 
     /** Creates an label.
      */
@@ -213,6 +229,12 @@ public:
     // super method
     virtual void setString(const char *newString);
     virtual void setString(const char *newString, bool needUpdateLabel);
+    virtual void setString(const std::string &newString) {
+        setString(newString.c_str());
+    }
+    virtual void setString(const std::string &newString, bool needUpdateLabel) {
+        setString(newString.c_str(), needUpdateLabel);
+    }
 
     virtual const char* getString(void) const;
     virtual void setCString(const char *label);

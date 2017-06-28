@@ -208,6 +208,26 @@ struct Quad3 {
     Vertex3F        tr;
 };
 
+//! a Point with a vertex point and a color 4B
+typedef struct _ccV2F_C4B
+{
+    //! vertices (2F)
+    Vertex2F		vertices;
+    //! colors (4B)
+    Color4B		colors;
+} ccV2F_C4B;
+
+//! A Triangle of ccV2F_C4B_T2F
+typedef struct _ccV2F_C4B_Triangle
+{
+    //! Point A
+    ccV2F_C4B a;
+    //! Point B
+    ccV2F_C4B b;
+    //! Point B
+    ccV2F_C4B c;
+} ccV2F_C4B_Triangle;
+
 //! a Point with a vertex point, a tex coord point and a color 4B
 struct V2F_C4B_T2F
 {

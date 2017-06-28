@@ -84,6 +84,9 @@ public:
      * If you want to use another texture, you should use the addSpriteFramesWithFile(const char *plist, const char *textureFileName) method.
      */
     void addSpriteFramesWithFile(const char *plist);
+    void addSpriteFramesWithFile(const std::string &plist) {
+        addSpriteFramesWithFile(plist.c_str());
+    }
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
     @since v0.99.5
@@ -121,6 +124,9 @@ public:
     * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const char* plist);
+    void removeSpriteFramesFromFile(const std::string &plist) {
+        removeSpriteFramesFromFile(plist.c_str());
+    }
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
@@ -139,6 +145,7 @@ public:
 
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const char *name) { return getSpriteFrameByName(name); }
+    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string &name) { return getSpriteFrameByName(name.c_str()); }
 
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.

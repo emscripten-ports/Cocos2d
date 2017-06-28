@@ -116,6 +116,9 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      */
     static String* createWithContentsOfFile(const char* filename);
+    static String* createWithContentsOfFile(const std::string &filename) {
+        return createWithContentsOfFile(filename.c_str());
+    }
 
     virtual void acceptVisitor(DataVisitor &visitor);
     virtual String* clone() const;

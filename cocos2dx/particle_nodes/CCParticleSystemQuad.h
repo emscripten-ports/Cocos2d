@@ -89,6 +89,7 @@ public:
 
     // Overrides
     virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles, ParticleBatchNode* batchNode, Rect rect);
     virtual void setTexture(Texture2D* texture) override;
     virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
     virtual void postStep() override;

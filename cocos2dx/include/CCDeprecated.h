@@ -29,8 +29,58 @@
 #define __COCOS2D_CCDEPRECATED_H__
 
 #include <math.h>
+#include <actions/CCActionCamera.h>
+#include <actions/CCActionCatmullRom.h>
+#include <actions/CCActionEase.h>
+#include <actions/CCActionGrid.h>
+#include <actions/CCActionGrid3D.h>
+#include <actions/CCActionInstant.h>
+#include <actions/CCActionPageTurn3D.h>
+#include <actions/CCActionProgressTimer.h>
+#include <actions/CCActionTiledGrid.h>
+#include <actions/CCActionTween.h>
+#include <text_input_node/CCIMEDelegate.h>
+#include <text_input_node/CCTextFieldTTF.h>
+#include <support/user_default/CCUserDefault.h>
+#include <ccTypes.h>
+#include <CCAffineTransform.h>
+#include <CCAccelerometerDelegate.h>
+#include <textures/CCTextureAtlas.h>
+#include <textures/CCTextureCache.h>
+#include <CCApplication.h>
+#include <CCConfiguration.h>
+#include <CCFileUtils.h>
+#include <draw_nodes/CCDrawNode.h>
+#include <base_nodes/CCAtlasNode.h>
+#include <label_nodes/CCLabelAtlas.h>
+#include <label_nodes/CCLabelBMFont.h>
+#include <effects/CCGrid.h>
+#include <keypad_dispatcher/CCKeypadDelegate.h>
+#include <layers_scenes_transitions_nodes/CCLayer.h>
+#include <layers_scenes_transitions_nodes/CCTransition.h>
+#include <layers_scenes_transitions_nodes/CCTransitionPageTurn.h>
+#include <layers_scenes_transitions_nodes/CCTransitionProgress.h>
+#include <menu_nodes/CCMenu.h>
+#include <menu_nodes/CCMenuItem.h>
+#include <misc_nodes/CCClippingNode.h>
+#include <misc_nodes/CCMotionStreak.h>
+#include <particle_nodes/CCParticleBatchNode.h>
+#include <particle_nodes/CCParticleExamples.h>
+#include <particle_nodes/CCParticleSystemQuad.h>
+#include <shaders/CCShaderCache.h>
+#include <sprite_nodes/CCAnimationCache.h>
+#include <sprite_nodes/CCSpriteFrameCache.h>
+#include <tilemap_parallax_nodes/CCParallaxNode.h>
+#include <tilemap_parallax_nodes/CCTMXLayer.h>
+#include <tilemap_parallax_nodes/CCTMXObjectGroup.h>
+#include <tilemap_parallax_nodes/CCTMXTiledMap.h>
+#include <tilemap_parallax_nodes/CCTMXXMLParser.h>
+#include <tilemap_parallax_nodes/CCTileMapAtlas.h>
+#include <misc_nodes/CCProgressTimer.h>
+#include <CCScheduler.h>
+#include <platform/CCEGLViewProtocol.h>
 #include "cocoa/CCGeometry.h"
-#include "ccTypes.h"
+
 
 NS_CC_BEGIN
 
@@ -408,6 +458,7 @@ CC_DEPRECATED_ATTRIBUTE extern const Color3B ccMAGENTA;
 CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLACK;
 CC_DEPRECATED_ATTRIBUTE extern const Color3B ccORANGE;
 CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGRAY;
+static const Color3B ccDARKGRAY = {88,88,88};
 
 CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kCCBlendFuncDisable;
 
@@ -446,6 +497,18 @@ CC_DEPRECATED_ATTRIBUTE static inline Color4F ccc4FFromccc4B(Color4B c)
 CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc4F(Color4F c)
 {
 	return Color4B((GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255));
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc3B(Color3B c)
+{
+    Color4B ret = {c.r, c.g, c.b, 255};
+    return ret;
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Color4B ccc4BFromccc3B(Color3B c, GLubyte alpha)
+{
+    Color4B ret = {c.r, c.g, c.b, alpha};
+        return ret;
 }
 
 CC_DEPRECATED_ATTRIBUTE static inline bool ccc4FEqual(Color4F a, Color4F b)

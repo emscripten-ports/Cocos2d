@@ -375,6 +375,9 @@ public:
     b2World* GetWorld();
     const b2World* GetWorld() const;
 
+    const b2Vec2 GetForce() const { return m_force; }
+    const float32 GetTorque() const { return m_torque; }
+
     /// Dump this body to a log file
     void Dump();
 

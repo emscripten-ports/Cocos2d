@@ -376,6 +376,9 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
+
+    int getAllocatedParticles() { return _allocatedParticles; }
+    float hasSpawnedParticle() { return _spawnedParticle; }
 protected:
     virtual void updateBlendFunc();
 
@@ -528,6 +531,8 @@ protected:
      @since v0.8
      */
     PositionType _positionType;
+
+    bool _spawnedParticle;
 };
 
 // end of particle_nodes group

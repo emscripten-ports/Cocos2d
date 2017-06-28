@@ -159,7 +159,7 @@ public:
      */
     static Sprite* createWithSpriteFrameName(const char *spriteFrameName);
 
-    static Sprite* createWithSpriteFrameName(std::string& spriteFrameName) {
+    static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName) {
         return createWithSpriteFrameName(spriteFrameName.c_str());
     }
     
@@ -238,6 +238,9 @@ public:
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const char *spriteFrameName);
+    virtual bool initWithSpriteFrameName(const std::string &spriteFrameName) {
+        return initWithSpriteFrameName(spriteFrameName.c_str());
+    }
     
     /**
      * Initializes a sprite with an image filename.

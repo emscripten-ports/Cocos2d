@@ -89,6 +89,8 @@ public:
     /// @param density the density in kilograms per meter squared.
     virtual void ComputeMass(b2MassData* massData, float32 density) const = 0;
 
+    float32 GetRadius() const { return m_radius; }
+
     Type m_type;
     float32 m_radius;
 };

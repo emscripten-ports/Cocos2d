@@ -50,6 +50,31 @@ b2DynamicTree::b2DynamicTree()
     m_insertionCount = 0;
 }
 
+void b2DynamicTree::Clear() {
+    m_root = b2_nullNode;
+    m_nodeCount = 0;
+    m_freeList = 0;
+    m_path = 0;
+    m_insertionCount = 0;
+
+    // Just in case because old bug
+    if (m_nodeCapacity < 0)
+    {
+        m_nodeCapacity = 0;
+        b2Assert(false);
+    }
+    memset(m_nodes, 0, m_nodeCapacity * sizeof(b2TreeNode));
+
+    // Build a linked list for the free list.
+    for (int32 i = 0; i < m_nodeCapacity - 1; ++i)
+    {
+        m_nodes[i].next = i + 1;
+        m_nodes[i].height = -1;
+    }
+    m_nodes[m_nodeCapacity-1].next = b2_nullNode;
+    m_nodes[m_nodeCapacity-1].height = -1;
+}
+
 b2DynamicTree::~b2DynamicTree()
 {
     // This frees the entire tree in one shot.

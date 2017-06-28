@@ -118,6 +118,10 @@ public:
     /// Build an optimal tree. Very expensive. For testing.
     void RebuildBottomUp();
 
+    int GetSize() { return m_nodeCount; }
+
+    void Clear();
+
 private:
 
     int32 AllocateNode();

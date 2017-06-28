@@ -22,6 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include <CCControlButtonLoader.h>
+#include <CCLabelTTFLoader.h>
+#include <CCLayerColorLoader.h>
+#include <CCLayerGradientLoader.h>
+#include <CCLayerLoader.h>
+#include <CCMenuItemImageLoader.h>
+#include <CCMenuLoader.h>
+#include <CCNodeLoaderLibrary.h>
+#include <CCParticleSystemQuadLoader.h>
+#include <CCScale9SpriteLoader.h>
+#include <CCTableView.h>
+
 /** Add deprecated global functions and variables here
  */
 

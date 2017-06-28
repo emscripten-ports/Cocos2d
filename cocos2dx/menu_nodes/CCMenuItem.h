@@ -99,6 +99,16 @@ public:
     /** set the target/selector of the menu item*/
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
 
+    virtual void extendTouchArea(float extensionPercent) {
+        //@caiiiycuk
+        printf("need to implement\n");
+    }
+
+    void extendTouchAreaY(float extensionPercent) {
+        //@caiiiycuk
+        printf("need to implement\n");
+    }
+
 protected:
     bool            _selected;
     bool            _enabled;
@@ -141,6 +151,9 @@ public:
 
     /** sets a new string to the inner label */
     void setString(const char * label);
+    void setString(const std::string& label) {
+        setString(label.c_str());
+    }
 
     /** Gets the color that will be used to disable the item */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };

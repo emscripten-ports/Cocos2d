@@ -183,6 +183,9 @@ public:
     /** returns the size of the OpenGL view in points.
     */
     const Size& getWinSize(void) const;
+    const Size& getVirtualViewSize(void) const {
+        return getWinSize();
+    }
 
     /** returns the size of the OpenGL view in pixels.
     */
@@ -383,6 +386,8 @@ public:
 
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
+
+    Scene* getNextScene() { return _nextScene; }
 
 protected:
     void purgeDirector();

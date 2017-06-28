@@ -104,6 +104,7 @@ struct b2Manifold
     b2Vec2 localPoint;                                ///< usage depends on manifold type
     Type type;
     int32 pointCount;                                ///< the number of manifold points
+    float32 penetration;
 };
 
 /// This is used to compute the current state of a contact manifold.

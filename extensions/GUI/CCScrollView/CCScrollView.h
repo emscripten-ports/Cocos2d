@@ -196,14 +196,15 @@ public:
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child) override;
     void setTouchEnabled(bool e) override;
-
-protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
      * @param animated If true, relocation is animated
      */
     void relocateContainer(bool animated);
+
+protected:
+
     /**
      * implements auto-scrolling behavior. change SCROLL_DEACCEL_RATE as needed to choose
      * deacceleration speed. it must be less than 1.0f.

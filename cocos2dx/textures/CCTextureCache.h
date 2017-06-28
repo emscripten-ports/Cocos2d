@@ -92,6 +92,9 @@ public:
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
     */
     Texture2D* addImage(const char* fileimage);
+    Texture2D* addImage(const std::string& fileimage) {
+        return addImage(fileimage.c_str());
+    }
 
     /* Returns a Texture2D object given a file image
     * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -114,6 +117,9 @@ public:
     @since v0.99.5
     */
     Texture2D* textureForKey(const char* key);
+    Texture2D* textureForKey(const std::string &key) {
+        return textureForKey(key.c_str());
+    }
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
@@ -138,6 +144,9 @@ public:
     @since v0.99.4
     */
     void removeTextureForKey(const char *textureKeyName);
+    void removeTextureForKey(const std::string &textureKeyName) {
+        removeTextureForKey(textureKeyName.c_str());
+    }
 
     /** Output to CCLOG the current contents of this TextureCache
     * This will attempt to calculate the size of each texture, and the total texture memory in use
