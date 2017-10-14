@@ -39,7 +39,7 @@ void cocos2dx_initAsyncImageLoaderLibrary() {
     if (isInited) {
         return;
     }
-    EM_ASM({
+    EM_ASM((
 /****************************************************************************
 Copyright (c) 2013      Zynga Inc.
 
@@ -341,7 +341,7 @@ var LibraryCocosHelper = {
 window['LibraryCocosHelper'] = LibraryCocosHelper;
 window['cocos2dx'] = LibraryCocosHelper.$cocos2dx;
 
-});
+));
 }
 
 extern "C" {

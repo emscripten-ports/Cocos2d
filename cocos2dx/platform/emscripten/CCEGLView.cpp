@@ -112,7 +112,7 @@ void onReleaseKey(unsigned char key, int x, int y) {
 EGLView::EGLView()
 {
     // mouse & touches handler
-    EM_ASM({
+    EM_ASM((
         var getMousePos = function(event) {
             var rect = Module["canvas"].getBoundingClientRect();
             var cw = Module["canvas"].width;
@@ -201,7 +201,7 @@ EGLView::EGLView()
         window.addEventListener("mousemove", onMouseMove, true);
         window.addEventListener("mousedown", onMouseButtonDown, true);
         window.addEventListener("mouseup", onMouseButtonUp, true);
-    });
+    ));
 
 	_eglDisplay = EGL_NO_DISPLAY;
 	_eglContext = EGL_NO_CONTEXT;
