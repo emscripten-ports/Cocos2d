@@ -788,7 +788,7 @@ void LayerColor::draw()
     //
     // Attributes
     //
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(_squareVertices, 4 * sizeof(Vertex2F), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -797,7 +797,7 @@ void LayerColor::draw()
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 

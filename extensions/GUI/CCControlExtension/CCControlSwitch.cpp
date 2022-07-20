@@ -168,12 +168,12 @@ void ControlSwitchSprite::draw()
     glUniform1i(_maskLocation, 1);
 
 #define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     long offset = 0;
     setGLBufferData(&_quad, 4 * kQuadSize, 0);
 #else
     long offset = (long)&_quad;
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);

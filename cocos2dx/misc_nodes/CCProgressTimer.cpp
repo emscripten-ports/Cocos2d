@@ -510,7 +510,7 @@ void ProgressTimer::draw(void)
 
     GL::bindTexture2D( _sprite->getTexture()->getName() );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
 
     int offset = 0;
@@ -525,7 +525,7 @@ void ProgressTimer::draw(void)
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     if(_type == Type::RADIAL)
     {

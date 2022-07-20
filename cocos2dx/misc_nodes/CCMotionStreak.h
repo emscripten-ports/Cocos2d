@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "ccTypes.h"
 #include "base_nodes/CCNode.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -44,9 +44,9 @@ NS_CC_BEGIN
  Creates a trailing path.
  */
 class CC_DLL MotionStreak : public NodeRGBA, public TextureProtocol
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */

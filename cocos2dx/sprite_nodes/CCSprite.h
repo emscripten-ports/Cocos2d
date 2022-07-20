@@ -33,9 +33,9 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -77,9 +77,9 @@ struct transformValues_;
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
 class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
 

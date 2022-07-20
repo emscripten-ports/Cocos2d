@@ -61,7 +61,7 @@ static Color4F s_color(1.0f,1.0f,1.0f,1.0f);
 static int s_pointSizeLocation = -1;
 static GLfloat s_pointSize = 1.0f;
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 static GLuint s_bufferObject = 0;
 static GLuint s_bufferSize = 0;
 
@@ -86,7 +86,7 @@ static void setGLBufferData(void *buf, GLuint bufSize)
     }
 }
 
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 static void lazy_init( void )
 {
@@ -134,12 +134,12 @@ void drawPoint( const Point& point )
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(&p, 8);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &p);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     glDrawArrays(GL_POINTS, 0, 1);
 
@@ -162,12 +162,12 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
     // iPhone and 32-bit machines optimization
     if( sizeof(Point) == sizeof(Vertex2F) )
     {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         setGLBufferData((void*) points, numberOfPoints * sizeof(Point));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, points);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     }
     else
     {
@@ -176,14 +176,14 @@ void drawPoints( const Point *points, unsigned int numberOfPoints )
             newPoints[i].x = points[i].x;
             newPoints[i].y = points[i].y;
         }
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         // Suspect Emscripten won't be emitting 64-bit code for a while yet,
         // but want to make sure this continues to work even if they do.
         setGLBufferData(newPoints, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     }
 
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
@@ -208,12 +208,12 @@ void drawLine( const Point& origin, const Point& destination )
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, 16);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     glDrawArrays(GL_LINES, 0, 2);
 
     CC_INCREMENT_GL_DRAWS(1);
@@ -252,12 +252,12 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
     // iPhone and 32-bit machines optimization
     if( sizeof(Point) == sizeof(Vertex2F) )
     {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
         if( closePolygon )
             glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
@@ -273,12 +273,12 @@ void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon
             newPoli[i].x = poli[i].x;
             newPoli[i].y = poli[i].y;
         }
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
         if( closePolygon )
             glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
@@ -307,12 +307,12 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
     // iPhone and 32-bit machines optimization
     if( sizeof(Point) == sizeof(Vertex2F) )
     {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         setGLBufferData((void*) poli, numberOfPoints * sizeof(Point));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     }
     else
     {
@@ -321,12 +321,12 @@ void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F colo
         {
             newPoli[i] = Vertex2F( poli[i].x, poli[i].y );
         }
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         setGLBufferData(newPoli, numberOfPoints * sizeof(Vertex2F));
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     }    
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
@@ -366,12 +366,12 @@ void drawCircle( const Point& center, float radius, float angle, unsigned int se
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
     ::free( vertices );
@@ -411,12 +411,12 @@ void drawSolidCircle( const Point& center, float radius, float angle, unsigned i
     
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+1);
     
@@ -452,12 +452,12 @@ void drawQuadBezier(const Point& origin, const Point& control, const Point& dest
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 
@@ -509,12 +509,12 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 
     CC_SAFE_DELETE_ARRAY(vertices);
@@ -543,12 +543,12 @@ void drawCubicBezier(const Point& origin, const Point& control1, const Point& co
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
 

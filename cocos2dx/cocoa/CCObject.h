@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "cocoa/CCDataVisitor.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <GLES2/gl2.h>
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 

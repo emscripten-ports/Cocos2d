@@ -32,9 +32,9 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -106,9 +106,9 @@ protected:
  Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
 class CC_DLL Grid3D : public GridBase
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** create one Grid */
@@ -148,9 +148,9 @@ protected:
  the tiles can be separated from the grid.
 */
 class CC_DLL TiledGrid3D : public GridBase
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** create one Grid */

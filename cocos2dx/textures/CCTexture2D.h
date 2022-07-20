@@ -32,9 +32,9 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -59,9 +59,9 @@ class GLProgram;
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL Texture2D : public Object
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** @typedef Texture2D::PixelFormat

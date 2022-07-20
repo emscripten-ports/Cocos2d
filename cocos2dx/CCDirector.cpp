@@ -1052,9 +1052,9 @@ void DisplayLinkDirector::startAnimation(void)
     }
 
     _invalid = false;
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
     Application::getInstance()->setAnimationInterval(_animationInterval);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 }
 
 void DisplayLinkDirector::mainLoop(void)
