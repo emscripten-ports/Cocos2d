@@ -7,7 +7,7 @@
 #include "platform/CCFileUtils.h"
 #include "support/base64.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
@@ -135,12 +135,12 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
     }
 }
 
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 std::map<std::string, std::string> localStorage;
 #endif
 
 string UserDefault::getStringForKey(const char* pKey, const std::string & defaultValue) {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     static char* cbuffer = new char[16 * 1024]; // 16kb
     bool isSet = EM_ASM_DOUBLE({
                                    var key = Pointer_stringify($0);
@@ -172,7 +172,7 @@ void UserDefault::setStringForKey(const char* pKey, const std::string & value) {
         return;
     }
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     EM_ASM_ARGS({
                     var key = Pointer_stringify($0);
                     var value = Pointer_stringify($1);

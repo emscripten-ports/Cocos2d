@@ -334,7 +334,7 @@ void MotionStreak::draw()
 
     GL::bindTexture2D( _texture->getName() );
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     // Size calculations from ::initWithFade
     setGLBufferData(_vertices, (sizeof(Vertex2F) * _maxPoints * 2), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -348,7 +348,7 @@ void MotionStreak::draw()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 

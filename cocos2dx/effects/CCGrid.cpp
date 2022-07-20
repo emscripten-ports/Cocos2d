@@ -322,7 +322,7 @@ void Grid3D::blit(void)
     //
     // Attributes
     //
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     // Size calculations from calculateVertexPoints().
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
@@ -344,7 +344,7 @@ void Grid3D::blit(void)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, _indices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     CC_INCREMENT_GL_DRAWS(1);
 }
 
@@ -538,7 +538,7 @@ void TiledGrid3D::blit(void)
     // Attributes
     //
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     int numQuads = _gridSize.width * _gridSize.height;
 
     // position
@@ -559,7 +559,7 @@ void TiledGrid3D::blit(void)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, _indices);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 
     CC_INCREMENT_GL_DRAWS(1);

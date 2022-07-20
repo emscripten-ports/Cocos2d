@@ -33,9 +33,9 @@ THE SOFTWARE.
 #include "platform/CCAccelerometerDelegate.h"
 #include "keypad_dispatcher/CCKeypadDelegate.h"
 #include "cocoa/CCArray.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -211,9 +211,9 @@ All features from Layer are valid, plus the following new features:
 - RGB colors
 */
 class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** creates a fullscreen black layer */

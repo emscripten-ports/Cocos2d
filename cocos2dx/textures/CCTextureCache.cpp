@@ -40,10 +40,10 @@ THE SOFTWARE.
 #include "cocoa/CCString.h"
 
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #include "platform/emscripten/CCTextureCacheEmscripten.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 using namespace std;
 
@@ -57,11 +57,11 @@ TextureCache * TextureCache::getInstance()
 {
     if (!_sharedTextureCache)
     {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         _sharedTextureCache = new TextureCacheEmscripten();
 #else
         _sharedTextureCache = new TextureCache();
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
     }
     return _sharedTextureCache;
 }

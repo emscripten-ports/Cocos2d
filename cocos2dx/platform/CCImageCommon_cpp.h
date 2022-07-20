@@ -29,10 +29,10 @@ THE SOFTWARE.
 #include <ctype.h>
 #include <unistd.h>
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 extern "C"
 {
@@ -323,7 +323,7 @@ bool Image::initWithImageFile(const char * strPath)
     }
 
     CC_SAFE_DELETE_ARRAY(buffer);
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     return bRet;
 }

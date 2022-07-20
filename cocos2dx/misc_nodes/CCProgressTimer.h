@@ -26,9 +26,9 @@ THE SOFTWARE.
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
 #include "sprite_nodes/CCSprite.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
 NS_CC_BEGIN
 
@@ -44,9 +44,9 @@ NS_CC_BEGIN
  @since v0.99.1
  */
 class CC_DLL ProgressTimer : public NodeRGBA
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 , public GLBufferedNode
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 {
 public:
     /** Types of progress

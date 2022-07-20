@@ -556,12 +556,12 @@ void Sprite::draw(void)
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
 #define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     long offset = 0;
     setGLBufferData(&_quad, 4 * kQuadSize, 0);
 #else
     long offset = (long)&_quad;
-#endif // EMSCRIPTEN
+#endif // __EMSCRIPTEN__
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
