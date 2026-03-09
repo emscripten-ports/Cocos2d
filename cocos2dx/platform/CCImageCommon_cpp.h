@@ -41,7 +41,7 @@ extern "C"
 #include "etc1.h"
 #include "jpeglib.h"
 }
-#if defined(__native_client__) || defined(EMSCRIPTEN)
+#if defined(__native_client__) || defined(__EMSCRIPTEN__)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
 #include "webp/decode.h"
