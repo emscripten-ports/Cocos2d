@@ -106,7 +106,7 @@ Config of cocos2d-x project, per target platform.
 #endif
 
 // Emscripten
-#if defined(EMSCRIPTEN)
+#if defined(__EMSCRIPTEN__)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM     CC_PLATFORM_EMSCRIPTEN
 #endif
