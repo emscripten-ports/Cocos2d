@@ -366,16 +366,16 @@ TextureCacheEmscripten::TextureCacheEmscripten()
     // Add dummy references to these functions so that the compiler will emit
     // code for them prior to this point (which is before when we will call
     // them.
-    int deps[] = {
-        (int)&TextureCacheEmscripten_addImageAsyncCallBack,
-        (int)&TextureCacheEmscripten_preMultiplyImageRegion
+    void* deps[] = {
+        (void*)&TextureCacheEmscripten_addImageAsyncCallBack,
+        (void*)&TextureCacheEmscripten_preMultiplyImageRegion
     };
 
     cocos2dx_initAsyncImageLoaderLibrary();
-    // cocos2dx_newAsyncImageLoader((int)this, (int)&deps);
+    // cocos2dx_newAsyncImageLoader((intptr_t)this, deps);
     EM_ASM_ARGS({
         LibraryCocosHelper.cocos2dx_newAsyncImageLoader($0, $1);
-    }, (size_t)this, (size_t)&deps);
+    }, (intptr_t)this, deps);
 }
 
 /**
