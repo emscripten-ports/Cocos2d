@@ -29,6 +29,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCCommon.h"
